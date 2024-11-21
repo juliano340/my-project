@@ -1,0 +1,49 @@
+/* Estiliza a barra de navegação */
+.navbar {
+    display: flex;
+    justify-content: center; /* Centraliza os links no meio da página */
+    align-items: center;
+    background-color: #3f51b5; /* Azul Material */
+    padding: 10px 20px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Sombra leve */
+    border-radius: 8px;
+    margin: 20px auto;
+    max-width: 600px; /* Largura máxima para centralizar */
+  }
+  
+  /* Estiliza os links */
+  .navbar a {
+    text-decoration: none;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    margin: 0 15px; /* Espaçamento entre os links */
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Destaque ao passar o mouse nos links */
+  .navbar a:hover {
+    background-color: #303f9f; /* Azul mais escuro */
+  }
+  
+  /* Estiliza o link ativo */
+  .navbar a.active {
+    background-color: #ff9800; /* Laranja para o link ativo */
+    color: white;
+    font-weight: bold;
+  }
+  
+  /* Responsividade para telas menores */
+  @media (max-width: 600px) {
+    .navbar {
+      flex-direction: column; /* Alinha links verticalmente */
+      padding: 15px;
+    }
+  
+    .navbar a {
+      margin: 10px 0; /* Espaçamento vertical */
+    }
+  }
+  

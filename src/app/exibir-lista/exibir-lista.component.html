@@ -1,0 +1,16 @@
+<div *ngIf="totalItens === 0" class="empty-list">
+  <p>Não há itens na lista. Adicione algo!</p>
+</div>
+<mat-list *ngIf="totalItens > 0">
+  <mat-list-item *ngFor="let item of itens; let i = index">
+    <div class="line">
+      <div>{{ item.nome }} <span class="categoria">({{ item.categoria }})</span></div>
+      <button mat-icon-button color="warn" (click)="removerItem(i)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </mat-list-item>
+  <button mat-raised-button color="warn" (click)="limparLista()" *ngIf="totalItens > 0">
+    Limpar Lista
+  </button>
+</mat-list>
