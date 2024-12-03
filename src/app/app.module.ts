@@ -2,22 +2,23 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Importante para Material
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AdicionarItemComponent } from './adicionar-item/adicionar-item.component';
+import { CommonComponentsModule } from './common/common.module';
+import { UserModule } from './user/user.module';
+import { TaskModule } from './task/task.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    AdicionarItemComponent 
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule, 
+    BrowserAnimationsModule,
     MatSnackBarModule,
-    AppRoutingModule
+    AppRoutingModule,
+    CommonComponentsModule,
+    UserModule,
+    TaskModule,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
