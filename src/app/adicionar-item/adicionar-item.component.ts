@@ -1,19 +1,16 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ListaServiceService } from '../lista-service.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-  selector: 'app-adicionar-item',
-  standalone: true,
-  imports: [CommonModule],
+  selector: 'app-adicionar-item',    
   templateUrl: './adicionar-item.component.html',
   styleUrls: ['./adicionar-item.component.css']
 })
 export class AdicionarItemComponent {
-  erroMensagem = ''; // Mensagem de erro para exibir no HTML
+  erroMensagem = ''; 
 
-  categorias = ['Alimentos', 'Tarefas', 'Compras', 'Outros']; // Categorias pré-definidas
+  categorias = ['Alimentos', 'Tarefas', 'Compras', 'Outros']; 
 
   constructor(private listaService: ListaServiceService, private snackBar: MatSnackBar) {}
 
@@ -22,14 +19,12 @@ export class AdicionarItemComponent {
       this.erroMensagem = 'O item não pode ser vazio.';
       return;
     }
-
     if (this.listaService.getItens().some(item => item.nome === novoItem)) {
       this.erroMensagem = 'O item já existe na lista.';
       return;
     }
-
     this.listaService.adicionarItem(novoItem, categoria);
-    this.erroMensagem = ''; // Limpa a mensagem de erro
+    this.erroMensagem = ''; 
     this.snackBar.open('Item adicionado com sucesso!', 'Fechar', { duration: 3000 });
   }
 }
