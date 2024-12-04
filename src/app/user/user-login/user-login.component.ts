@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { User } from '../users.model';
+import * as bcrypt from 'bcryptjs';
 
 @Component({
   selector: 'app-user-login',
@@ -16,13 +17,12 @@ export class UserLoginComponent {
 
   login(): void {
     const users = JSON.parse(localStorage.getItem('users') || '[]');
-    const user = users.find(
-      (u: User) => u.email === this.email && u.password === this.password
-    );
 
-    if (user) {
+    const user = users.find((u: User) => u.email === this.email);
+
+    if (user && bcrypt.compareSync(this.password, user.password)) {
       localStorage.setItem('loggedInUser', JSON.stringify(user));
-      this.router.navigate(['/exibir']);
+      this.router.navigate(['/adicionar']);
     } else {
       this.snackBar.open('Email ou senha incorretos', 'Fechar', {
         duration: 2000,

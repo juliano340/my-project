@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { User } from '../users.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import * as bcrypt from 'bcryptjs';
 
 @Component({
   selector: 'app-user-register',
@@ -19,12 +20,13 @@ export class UserRegisterComponent {
     role: '',
   };
 
-  message = '';
-
   register(): void {
     const users: User[] = JSON.parse(localStorage.getItem('users') || '[]');
 
     this.user.id = users.length > 0 ? users[users.length - 1].id + 1 : 1;
+
+    const salt = bcrypt.genSaltSync(10);
+    this.user.password = bcrypt.hashSync(this.user.password, salt);
 
     users.push({ ...this.user });
 
