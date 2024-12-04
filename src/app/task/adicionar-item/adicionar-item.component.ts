@@ -9,7 +9,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class AdicionarItemComponent {
   erroMensagem = '';
-
   categorias = ['Alimentos', 'Tarefas', 'Compras', 'Outros'];
 
   constructor(
@@ -18,15 +17,27 @@ export class AdicionarItemComponent {
   ) {}
 
   adicionar(novoItem: string, categoria: string): void {
+    const loggedInUser = JSON.parse(
+      localStorage.getItem('loggedInUser') || '{}'
+    );
+
     if (!novoItem.trim()) {
       this.erroMensagem = 'O item não pode ser vazio.';
       return;
     }
-    if (this.listaService.getItens().some((item) => item.nome === novoItem)) {
+
+    const userId = loggedInUser.id;
+
+    if (
+      this.listaService
+        .getItensByUser(userId)
+        .some((item) => item.nome === novoItem)
+    ) {
       this.erroMensagem = 'O item já existe na lista.';
       return;
     }
-    this.listaService.adicionarItem(novoItem, categoria);
+
+    this.listaService.adicionarItem(novoItem, categoria, userId);
     this.erroMensagem = '';
     this.snackBar.open('Item adicionado com sucesso!', 'Fechar', {
       duration: 3000,

@@ -1,7 +1,6 @@
 <app-task-menu></app-task-menu>
-<div *ngIf="totalItens === 0" class="empty-list">
-  <p>Não há itens na lista. Adicione algo!</p>
-</div>
+<h2>Tarefas</h2>
+<div *ngIf="totalItens === 0" class="empty-list">Nenhum item na lista.</div>
 <mat-list *ngIf="totalItens > 0">
   <mat-list-item *ngFor="let item of itens; let i = index">
     <div class="line">
@@ -13,6 +12,8 @@
       </button>
     </div>
   </mat-list-item>
+</mat-list>
+<div>
   <button
     mat-raised-button
     color="warn"
@@ -21,4 +22,4 @@
   >
     Limpar Lista
   </button>
-</mat-list>
+</div>

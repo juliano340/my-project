@@ -1,55 +1,63 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ListaServiceService } from '../lista-service.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-exibir-lista',
-  standalone: false,
   templateUrl: './exibir-lista.component.html',
   styleUrls: ['./exibir-lista.component.css'],
 })
-export class ExibirListaComponent {
+export class ExibirListaComponent implements OnInit {
+  itens: any[] = []; // Armazena os itens do usuário logado
+  totalItens: number = 0; // Total de itens
+
   constructor(
     private listaService: ListaServiceService,
     private snackBar: MatSnackBar
   ) {}
 
-  get itens() {
-    return this.listaService.getItens();
-  }
-
-  get totalItens() {
-    return this.listaService.getItens().length;
-  }
-
-  limparLista() {
-    this.listaService.limparLista(); // Limpa o array
-    this.snackBar.open('Limpeza realizada com sucesso!', 'Fechar', {
-      duration: 3000,
-      verticalPosition: 'top',
-      horizontalPosition: 'right',
-    });
-  }
-
-  removerItem(index: number) {
-    const itemRemovido = this.listaService.getItens()[index]; // Salva o item antes de remover
-    this.listaService.removerItem(index);
-    const snackBarRef = this.snackBar.open(
-      'Item removido com sucesso!',
-      'Desfazer',
-      { duration: 3000, verticalPosition: 'top', horizontalPosition: 'right' }
+  ngOnInit(): void {
+    const loggedInUser = JSON.parse(
+      localStorage.getItem('loggedInUser') || '{}'
     );
+    if (loggedInUser?.id) {
+      this.itens = this.listaService.getItensByUser(loggedInUser.id);
+      this.totalItens = this.itens.length;
+    }
+  }
 
-    snackBarRef.onAction().subscribe(() => {
-      this.listaService.adicionarItem(
-        itemRemovido.nome,
-        itemRemovido.categoria
-      ); // Restaura o item
-      this.snackBar.open('Item restaurado!', 'Fechar', {
+  removerItem(index: number): void {
+    const loggedInUser = JSON.parse(
+      localStorage.getItem('loggedInUser') || '{}'
+    );
+    if (loggedInUser?.id) {
+      const itemId = this.itens[index]?.id;
+      this.listaService.removerItem(itemId, loggedInUser.id);
+      this.itens.splice(index, 1);
+      this.totalItens = this.itens.length;
+
+      this.snackBar.open('Item removido com sucesso!', 'Fechar', {
         duration: 3000,
         verticalPosition: 'top',
         horizontalPosition: 'right',
       });
-    });
+    }
+  }
+
+  limparLista(): void {
+    const loggedInUser = JSON.parse(
+      localStorage.getItem('loggedInUser') || '{}'
+    );
+    if (loggedInUser?.id) {
+      this.listaService.limparLista(loggedInUser.id);
+      this.itens = [];
+      this.totalItens = 0;
+
+      this.snackBar.open('Lista limpa com sucesso!', 'Fechar', {
+        duration: 3000,
+        verticalPosition: 'top',
+        horizontalPosition: 'right',
+      });
+    }
   }
 }
