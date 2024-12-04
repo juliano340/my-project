@@ -6,10 +6,6 @@ form {
   margin: auto;
 }
 
-label {
-  font-weight: bold;
-}
-
 input,
 button {
   padding: 10px;
@@ -45,5 +41,5 @@ p {
   text-align: center;
   margin-top: 20px;
   font-size: 1rem;
-  color: #28a745;
+  color: black;
 }

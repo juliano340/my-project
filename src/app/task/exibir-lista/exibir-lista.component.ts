@@ -26,6 +26,8 @@ export class ExibirListaComponent {
     this.listaService.limparLista(); // Limpa o array
     this.snackBar.open('Limpeza realizada com sucesso!', 'Fechar', {
       duration: 3000,
+      verticalPosition: 'top',
+      horizontalPosition: 'right',
     });
   }
 
@@ -35,7 +37,7 @@ export class ExibirListaComponent {
     const snackBarRef = this.snackBar.open(
       'Item removido com sucesso!',
       'Desfazer',
-      { duration: 3000 }
+      { duration: 3000, verticalPosition: 'top', horizontalPosition: 'right' }
     );
 
     snackBarRef.onAction().subscribe(() => {
@@ -43,7 +45,11 @@ export class ExibirListaComponent {
         itemRemovido.nome,
         itemRemovido.categoria
       ); // Restaura o item
-      this.snackBar.open('Item restaurado!', 'Fechar', { duration: 3000 });
+      this.snackBar.open('Item restaurado!', 'Fechar', {
+        duration: 3000,
+        verticalPosition: 'top',
+        horizontalPosition: 'right',
+      });
     });
   }
 }

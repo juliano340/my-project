@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { User } from '../users.model';
 
 @Component({
   selector: 'app-user-login',
@@ -9,24 +11,24 @@ import { Router } from '@angular/router';
 export class UserLoginComponent {
   email: string = '';
   password: string = '';
-  message: string = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private snackBar: MatSnackBar) {}
 
   login(): void {
     const users = JSON.parse(localStorage.getItem('users') || '[]');
     const user = users.find(
-      (u: any) => u.email === this.email && u.password === this.password
+      (u: User) => u.email === this.email && u.password === this.password
     );
 
     if (user) {
-      this.message = 'Login bem-sucedido!';
-
       localStorage.setItem('loggedInUser', JSON.stringify(user));
-
-      this.router.navigate(['/adicionar']);
+      this.router.navigate(['/exibir']);
     } else {
-      this.message = 'Credenciais inválidas. Tente novamente.';
+      this.snackBar.open('Email ou senha incorretos', 'Fechar', {
+        duration: 2000,
+        verticalPosition: 'top',
+        horizontalPosition: 'right',
+      });
     }
 
     this.email = '';

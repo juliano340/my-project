@@ -4,13 +4,18 @@ import { AdicionarItemComponent } from './task/adicionar-item/adicionar-item.com
 import { ExibirListaComponent } from './task/exibir-lista/exibir-lista.component';
 import { UserRegisterComponent } from './user/user-register/user-register.component';
 import { UserLoginComponent } from './user/user-login/user-login.component';
+import { authGuard } from './auth.guard';
 
 const routes: Routes = [
-  { path: 'login', component: UserLoginComponent },
+  { path: 'login', component: UserLoginComponent, canActivate: [authGuard] },
   { path: 'adicionar', component: AdicionarItemComponent },
   { path: 'exibir', component: ExibirListaComponent },
   { path: '', redirectTo: 'adicionar', pathMatch: 'full' },
-  { path: 'register', component: UserRegisterComponent },
+  {
+    path: 'register',
+    component: UserRegisterComponent,
+    canActivate: [authGuard],
+  },
 ];
 
 @NgModule({

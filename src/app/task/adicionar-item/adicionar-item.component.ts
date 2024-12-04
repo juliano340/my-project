@@ -30,6 +30,8 @@ export class AdicionarItemComponent {
     this.erroMensagem = '';
     this.snackBar.open('Item adicionado com sucesso!', 'Fechar', {
       duration: 3000,
+      verticalPosition: 'top',
+      horizontalPosition: 'right',
     });
   }
 }

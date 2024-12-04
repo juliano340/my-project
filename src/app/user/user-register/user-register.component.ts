@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { User } from '../users.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-register',
@@ -8,7 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./user-register.component.css'],
 })
 export class UserRegisterComponent {
-  constructor(private snackBar: MatSnackBar) {}
+  constructor(private snackBar: MatSnackBar, private router: Router) {}
 
   user: User = {
     id: 0,
@@ -40,6 +41,11 @@ export class UserRegisterComponent {
     this.snackBar.open('Usuário adicionado com sucesso!', 'Fechar', {
       duration: 2000,
       verticalPosition: 'top',
+      horizontalPosition: 'right',
     });
+
+    setTimeout(() => {
+      this.router.navigate(['/login']);
+    }, 2000);
   }
 }

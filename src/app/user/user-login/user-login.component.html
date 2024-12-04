@@ -23,4 +23,6 @@
   <button type="submit" [disabled]="loginForm.invalid">Entrar</button>
 </form>
 
-<p *ngIf="message" style="color: green">{{ message }}</p>
+<div>
+  <p>Ainda não possui uma conta? <a routerLink="/register">Cadastre-se!</a></p>
+</div>
