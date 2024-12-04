@@ -38,7 +38,8 @@ export class UserRegisterComponent {
     };
 
     this.snackBar.open('Usuário adicionado com sucesso!', 'Fechar', {
-      duration: 3000,
+      duration: 2000,
+      verticalPosition: 'top',
     });
   }
 }

@@ -5,7 +5,16 @@
     </a>
   </div>
   <div class="header-right">
-    <a href="/login">Login</a>
-    <a href="/register">Register</a>
+    <!-- Links exibidos se o usuário NÃO estiver logado -->
+    <ng-container *ngIf="!isLoggedIn(); else loggedIn">
+      <a routerLink="/login" routerLinkActive="active">Login</a>
+      <a routerLink="/register" routerLinkActive="active">Register</a>
+    </ng-container>
+
+    <!-- Links exibidos se o usuário estiver logado -->
+    <ng-template #loggedIn>
+      <span>Bem-vindo, {{ getLoggedInUserName() }}</span>
+      <a (click)="logout()">Sair</a>
+    </ng-template>
   </div>
 </header>
