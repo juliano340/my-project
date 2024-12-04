@@ -7,7 +7,12 @@
       <div>
         {{ item.nome }} <span class="categoria">({{ item.categoria }})</span>
       </div>
-      <button mat-icon-button color="warn" (click)="removerItem(i)">
+      <button
+        mat-icon-button
+        color="warn"
+        (click)="removerItem(i)"
+        *ngIf="isAdmin"
+      >
         <mat-icon>delete</mat-icon>
       </button>
     </div>
@@ -18,7 +23,7 @@
     mat-raised-button
     color="warn"
     (click)="limparLista()"
-    *ngIf="totalItens > 0"
+    *ngIf="totalItens > 0 && isAdmin"
   >
     Limpar Lista
   </button>
