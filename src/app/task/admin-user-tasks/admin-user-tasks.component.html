@@ -1,0 +1,28 @@
+<app-task-menu></app-task-menu>
+<h2>Tarefas de {{ userName }}</h2>
+
+<div *ngIf="tarefas.length === 0" class="empty-list">Nenhum item na lista.</div>
+
+<mat-list *ngIf="tarefas.length > 0">
+  <mat-list-item *ngFor="let item of tarefas; let i = index">
+    <div class="line">
+      <div>
+        {{ item.nome }} <span class="categoria">({{ item.categoria }})</span>
+      </div>
+      <button mat-icon-button color="warn" (click)="removerItem(i)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </mat-list-item>
+</mat-list>
+
+<div>
+  <button
+    mat-raised-button
+    color="warn"
+    (click)="limparLista()"
+    *ngIf="tarefas.length > 0"
+  >
+    Limpar Lista
+  </button>
+</div>

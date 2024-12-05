@@ -6,6 +6,8 @@ import { UserRegisterComponent } from './user/user-register/user-register.compon
 import { UserLoginComponent } from './user/user-login/user-login.component';
 import { authGuard } from './auth.guard';
 import { authProtectGuard } from './auth-protect.guard';
+import { AdminUserListComponent } from './task/admin-user-list/admin-user-list.component';
+import { AdminUserTasksComponent } from './task/admin-user-tasks/admin-user-tasks.component';
 
 const routes: Routes = [
   { path: 'login', component: UserLoginComponent, canActivate: [authGuard] },
@@ -25,6 +27,20 @@ const routes: Routes = [
     component: UserRegisterComponent,
     canActivate: [authGuard],
   },
+
+  {
+    path: 'admin/users',
+    component: AdminUserListComponent,
+    canActivate: [authProtectGuard],
+    data: { requiresAdmin: true },
+  },
+  {
+    path: 'admin/tasks/:id',
+    component: AdminUserTasksComponent,
+    canActivate: [authProtectGuard],
+    data: { requiresAdmin: true },
+  },
+
   { path: '**', redirectTo: 'login', pathMatch: 'full' },
 ];
 

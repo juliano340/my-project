@@ -5,10 +5,18 @@ import { Router } from '@angular/router';
 export const authProtectGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
 
-  const isLoggedIn = !!localStorage.getItem('loggedInUser');
+  const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser') || '{}');
 
-  if (!isLoggedIn) {
-    router.navigate(['/exibir']);
+  // Verifica se o usuário está logado
+  if (!loggedInUser?.id) {
+    router.navigate(['/login']); // Redireciona para login se não estiver logado
+    return false;
+  }
+
+  // Verifica se a rota requer um administrador
+  const requiresAdmin = route.data?.['requiresAdmin'];
+  if (requiresAdmin && loggedInUser.role !== 'admin') {
+    router.navigate(['/exibir']); // Redireciona se não for administrador
     return false;
   }
 

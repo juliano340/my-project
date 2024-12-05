@@ -1,11 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Item } from './task.model';
+import { User } from '../user/users.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ListaServiceService {
   private itens: Item[] = this.carregarDoLocalStorage();
+
+  private users: User[] = JSON.parse(localStorage.getItem('users') || '[]');
+
+  getAllUsers(): User[] {
+    return this.users;
+  }
 
   getItensByUser(userId: number): Item[] {
     return this.itens.filter((item) => item.userId === userId);
