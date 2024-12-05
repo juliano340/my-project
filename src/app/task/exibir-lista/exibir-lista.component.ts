@@ -75,20 +75,26 @@ export class ExibirListaComponent implements OnInit {
       );
       return;
     }
-    const loggedInUser = JSON.parse(
-      localStorage.getItem('loggedInUser') || '{}'
+
+    const confirmacao = window.confirm(
+      'Você tem certeza de que deseja limpar a lista?'
     );
 
-    if (loggedInUser?.id) {
-      this.listaService.limparLista(loggedInUser.id);
-      this.itens = [];
-      this.totalItens = 0;
+    if (confirmacao) {
+      const loggedInUser = JSON.parse(
+        localStorage.getItem('loggedInUser') || '{}'
+      );
+      if (loggedInUser?.id) {
+        this.listaService.limparLista(loggedInUser.id);
+        this.itens = [];
+        this.totalItens = 0;
 
-      this.snackBar.open('Lista limpa com sucesso!', 'Fechar', {
-        duration: 3000,
-        verticalPosition: 'top',
-        horizontalPosition: 'right',
-      });
+        this.snackBar.open('Lista limpa com sucesso!', 'Fechar', {
+          duration: 3000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+        });
+      }
     }
   }
 }
