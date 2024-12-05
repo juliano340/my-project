@@ -4,10 +4,11 @@ import { Router } from '@angular/router';
 
 export const authProtectGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
+
   const isLoggedIn = !!localStorage.getItem('loggedInUser');
 
   if (!isLoggedIn) {
-    router.navigate(['/login']);
+    router.navigate(['/exibir']);
     return false;
   }
 

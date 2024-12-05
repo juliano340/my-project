@@ -75,7 +75,6 @@ export class ExibirListaComponent implements OnInit {
       );
       return;
     }
-
     const loggedInUser = JSON.parse(
       localStorage.getItem('loggedInUser') || '{}'
     );
@@ -83,9 +82,8 @@ export class ExibirListaComponent implements OnInit {
     if (loggedInUser?.id) {
       this.listaService.limparLista(loggedInUser.id);
       this.itens = [];
-      this.totalItens = 0; // Reseta o total de itens
+      this.totalItens = 0;
 
-      // Exibe uma mensagem de sucesso
       this.snackBar.open('Lista limpa com sucesso!', 'Fechar', {
         duration: 3000,
         verticalPosition: 'top',
