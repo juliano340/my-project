@@ -13,4 +13,12 @@
   >
     Exibir Lista
   </a>
+  <a
+    *ngIf="isAdmin"
+    routerLink="/admin/users"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }"
+  >
+    Consulta de Usuários
+  </a>
 </nav>
