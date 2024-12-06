@@ -9,6 +9,15 @@
       </div>
       <button
         mat-icon-button
+        color="primary"
+        [routerLink]="['/task/edit', item.id]"
+        aria-label="Editar Tarefa"
+        *ngIf="isAdmin"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button
+        mat-icon-button
         color="warn"
         (click)="removerItem(i)"
         *ngIf="isAdmin"

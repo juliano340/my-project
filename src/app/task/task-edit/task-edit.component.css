@@ -1,0 +1,67 @@
+/* Centraliza o formulário */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 400px;
+  margin: auto;
+}
+
+/* Estilo para os rótulos */
+label {
+  font-weight: bold;
+  font-family: "Roboto", sans-serif;
+  color: #3f51b5; /* Azul Material */
+}
+
+/* Estilo para os campos de entrada */
+input,
+select,
+button {
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+}
+
+/* Botões */
+button {
+  background-color: #007bff; /* Azul Material */
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3; /* Azul mais escuro ao passar o mouse */
+}
+
+button:disabled {
+  background-color: #ccc; /* Cor de botão desativado */
+  cursor: not-allowed;
+}
+
+/* Título */
+h2 {
+  font-family: "Roboto", sans-serif;
+  text-align: center;
+  color: #3f51b5; /* Azul Material */
+  margin-top: 30px;
+}
+
+/* Espaçamento entre os botões */
+button + button {
+  margin-top: 10px;
+}
+
+/* Mensagem de erro */
+.erro {
+  color: red;
+  font-size: 14px;
+  text-align: center;
+  margin-top: -10px;
+}

@@ -31,22 +31,17 @@ export class ExibirListaComponent implements OnInit {
   }
 
   removerItem(index: number): void {
-    if (!this.isAdmin) {
-      this.snackBar.open(
-        'Apenas administradores podem excluir tarefas.',
-        'Fechar',
-        {
-          duration: 3000,
-          verticalPosition: 'top',
-          horizontalPosition: 'right',
-        }
-      );
-      return;
-    }
-
     const loggedInUser = JSON.parse(
       localStorage.getItem('loggedInUser') || '{}'
     );
+
+    const confirmacao = window.confirm(
+      'Você tem certeza de que deseja excluir a tarefa?'
+    );
+
+    if (!confirmacao) {
+      return;
+    }
 
     if (loggedInUser?.id) {
       const itemId = this.itens[index]?.id;

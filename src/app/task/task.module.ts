@@ -11,6 +11,8 @@ import { RouterModule } from '@angular/router';
 import { AdminUserListComponent } from './admin-user-list/admin-user-list.component';
 import { AdminUserTasksComponent } from './admin-user-tasks/admin-user-tasks.component';
 import { MatTableModule } from '@angular/material/table';
+import { TaskEditComponent } from './task-edit/task-edit.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,7 @@ import { MatTableModule } from '@angular/material/table';
     TaskMenuComponent,
     AdminUserListComponent,
     AdminUserTasksComponent,
+    TaskEditComponent,
   ],
   imports: [
     CommonModule,
@@ -28,6 +31,7 @@ import { MatTableModule } from '@angular/material/table';
     RouterLink,
     RouterModule,
     MatTableModule,
+    FormsModule,
   ],
   exports: [AdicionarItemComponent, ExibirListaComponent, TaskMenuComponent],
 })

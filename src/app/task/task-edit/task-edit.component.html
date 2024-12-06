@@ -1,0 +1,29 @@
+<app-task-menu></app-task-menu>
+
+<h2>Editar Tarefa</h2>
+
+<form *ngIf="task" (ngSubmit)="salvar()">
+  <div>
+    <label for="nome">Nome</label>
+    <input id="nome" type="text" [(ngModel)]="task.nome" name="nome" required />
+  </div>
+
+  <div>
+    <label for="categoria">Categoria</label>
+    <select
+      id="categoria"
+      [(ngModel)]="task.categoria"
+      name="categoria"
+      required
+    >
+      <option *ngFor="let cat of categorias" [value]="cat">{{ cat }}</option>
+    </select>
+  </div>
+
+  <button type="submit">Salvar</button>
+  <button type="button" (click)="cancelar()">Cancelar</button>
+</form>
+
+<div *ngIf="!task">
+  <p>Tarefa não encontrada.</p>
+</div>

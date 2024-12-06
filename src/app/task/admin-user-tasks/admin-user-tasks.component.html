@@ -9,6 +9,14 @@
       <div>
         {{ item.nome }} <span class="categoria">({{ item.categoria }})</span>
       </div>
+      <button
+        mat-icon-button
+        color="primary"
+        [routerLink]="['/task/edit', item.id]"
+        aria-label="Editar Tarefa"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
       <button mat-icon-button color="warn" (click)="removerItem(i)">
         <mat-icon>delete</mat-icon>
       </button>

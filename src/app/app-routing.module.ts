@@ -8,6 +8,7 @@ import { authGuard } from './auth.guard';
 import { authProtectGuard } from './auth-protect.guard';
 import { AdminUserListComponent } from './task/admin-user-list/admin-user-list.component';
 import { AdminUserTasksComponent } from './task/admin-user-tasks/admin-user-tasks.component';
+import { TaskEditComponent } from './task/task-edit/task-edit.component';
 
 const routes: Routes = [
   { path: 'login', component: UserLoginComponent, canActivate: [authGuard] },
@@ -40,6 +41,8 @@ const routes: Routes = [
     canActivate: [authProtectGuard],
     data: { requiresAdmin: true },
   },
+
+  { path: 'task/edit/:id', component: TaskEditComponent },
 
   { path: '**', redirectTo: 'login', pathMatch: 'full' },
 ];

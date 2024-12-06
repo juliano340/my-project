@@ -1,36 +1,58 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { ListaServiceService } from '../lista-service.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-user-tasks',
   templateUrl: './admin-user-tasks.component.html',
   styleUrls: ['./admin-user-tasks.component.css'],
 })
-export class AdminUserTasksComponent implements OnInit {
+export class AdminUserTasksComponent implements OnInit, OnDestroy {
   tarefas: any[] = [];
   userName: string = '';
   userId: number = 0;
+  routerSubscription!: Subscription;
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private listaService: ListaServiceService,
     private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
-    this.userId = Number(this.route.snapshot.paramMap.get('id')); // Obtém o ID do usuário da URL
+    this.userId = Number(this.route.snapshot.paramMap.get('id'));
+    this.carregarDados();
+
+    this.routerSubscription = this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.carregarDados();
+      });
+  }
+
+  carregarDados(): void {
     const users = this.listaService.getAllUsers();
     const user = users.find((u) => u.id === this.userId);
 
     if (user) {
       this.userName = user.name;
       this.tarefas = this.listaService.getItensByUser(this.userId);
+      console.log('Tarefas atualizadas:', this.tarefas);
     }
   }
 
   removerItem(index: number): void {
+    const confirmacao = window.confirm(
+      'Você tem certeza de que deseja excluir a tarefa?'
+    );
+
+    if (!confirmacao) {
+      return;
+    }
     const itemId = this.tarefas[index]?.id;
 
     if (itemId) {
@@ -57,6 +79,12 @@ export class AdminUserTasksComponent implements OnInit {
         verticalPosition: 'top',
         horizontalPosition: 'right',
       });
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.routerSubscription) {
+      this.routerSubscription.unsubscribe(); // Evita vazamentos de memória
     }
   }
 }
