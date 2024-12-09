@@ -1,29 +1,40 @@
-<h2>Login</h2>
-<form (ngSubmit)="login()" #loginForm="ngForm">
-  <div>
-    <!-- FIXME: 19 -->
-    <input
-      type="email"
-      id="email"
-      [(ngModel)]="email"
-      name="email"
-      required
-      placeholder="Digite seu email"
-    />
-  </div>
-  <div>
-    <input
-      type="password"
-      id="password"
-      [(ngModel)]="password"
-      name="password"
-      required
-      placeholder="Digite sua senha"
-    />
-  </div>
-  <button type="submit" [disabled]="loginForm.invalid">Entrar</button>
-</form>
+<div class="container">
+  <h2>Login</h2>
 
-<div>
-  <p>Ainda não possui uma conta? <a routerLink="/register">Cadastre-se!</a></p>
+  <form class="w-75 mb-3" [formGroup]="loginForm">
+    <div class="row">
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input
+          type="email"
+          class="form-control is-invalid"
+          [class.is-invalid]="
+            loginForm.get('email')?.errors && loginForm.get('email')?.touched
+          "
+          id="email"
+          formControlName="email"
+        />
+        <div class="invalid-feedback">Informe um e-mail válido!</div>
+      </div>
+      <div class="form-group">
+        <label for="password">Senha:</label>
+        <input
+          type="password"
+          class="form-control is-invalid"
+          id="password"
+          formControlName="password"
+          [class.is-invalid]="
+            loginForm.get('password')?.errors &&
+            loginForm.get('password')?.touched
+          "
+        />
+        <div class="invalid-feedback">
+          A senha precisa conter no mínimo 6 caracteres!
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary" (click)="submitForm()">
+      Entrar
+    </button>
+  </form>
 </div>

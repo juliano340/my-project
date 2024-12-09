@@ -1,39 +1,49 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { User } from './users.model';
 import * as bcrypt from 'bcryptjs';
+import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UserService } from './user.service';
 
 @Component({
   selector: 'app-user-login',
   templateUrl: './user-login.component.html',
   styleUrls: ['./user-login.component.css'],
 })
-export class UserLoginComponent {
+export class UserLoginComponent implements OnInit {
   email: string = '';
   password: string = '';
+  loginForm: FormGroup = new FormGroup({});
 
-  constructor(private router: Router, private snackBar: MatSnackBar) {}
+  constructor(
+    private router: Router,
+    private snackBar: MatSnackBar,
+    private fb: FormBuilder,
+    private userService: UserService
+  ) {}
 
-  login() {
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
+  ngOnInit() {
+    this.initializeForm();
+  }
 
-    const user = users.find((u: User) => u.email === this.email);
-
-    if (user && bcrypt.compareSync(this.password, user.password)) {
-      localStorage.setItem('loggedInUser', JSON.stringify(user));
-      this.router.navigate(['/exibir']);
-
-      return;
-    }
-
-    this.snackBar.open('Email ou senha incorretos', 'Fechar', {
-      duration: 2000,
-      verticalPosition: 'top',
-      horizontalPosition: 'right',
+  initializeForm() {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(1)]],
     });
+  }
 
-    this.email = '';
-    this.password = '';
+  submitForm() {
+    if (this.loginForm.valid) {
+      const { email, password } = this.loginForm.value;
+      this.userService.login(email, password);
+    } else {
+      this.snackBar.open('Preencha todos os campos corretamente', 'Fechar', {
+        duration: 2000,
+        verticalPosition: 'top',
+        horizontalPosition: 'right',
+      });
+    }
   }
 }
