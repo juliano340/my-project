@@ -30,6 +30,7 @@ export class ListaServiceService {
       const novoItem: Item = {
         id:
           this.itens.length > 0 ? this.itens[this.itens.length - 1].id + 1 : 1,
+        // FIXME: id: this.itens.length++, // TESTAR
         nome,
         categoria,
         userId,
@@ -41,6 +42,7 @@ export class ListaServiceService {
   }
 
   removerItem(itemId: number, userId: number): void {
+    // remoção: Normalmente é realizada por indices.
     this.itens = this.itens.filter(
       (item) => !(item.id === itemId && item.userId === userId)
     );
@@ -54,7 +56,7 @@ export class ListaServiceService {
     this.notificarAtualizacao();
   }
 
-  getTaskById(id: number): any {
+  getTaskById(id: number): Item | undefined {
     return this.itens.find((task) => task.id === id);
   }
 
@@ -62,6 +64,8 @@ export class ListaServiceService {
     this.itens = this.itens.map((task) =>
       task.id === updatedTask.id ? updatedTask : task
     );
+
+    //FIXME: this.itens[Index] = updatedTask;
     this.salvarNoLocalStorage();
     this.notificarAtualizacao();
     console.log('Tarefas atualizadas no localStorage:', this.itens);

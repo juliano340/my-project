@@ -1,7 +1,6 @@
-/* Estiliza a barra de navegação */
 .navbar {
   display: flex;
-  justify-content: center; /* Centraliza os links no meio da página */
+  justify-content: center;
   align-items: center;
   background-color: #3f51b5; /* Azul Material */
   padding: 10px 20px;

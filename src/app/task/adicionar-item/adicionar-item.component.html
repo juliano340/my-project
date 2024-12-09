@@ -5,9 +5,11 @@
   <select #categoria>
     <option *ngFor="let cat of categorias" [value]="cat">{{ cat }}</option>
   </select>
+  <!-- FIXME: 9 -->
   <button
     (click)="adicionar(novoItem.value, categoria.value); novoItem.value = ''"
   >
+    <!--  FIXME: 10 -->
     Adicionar
   </button>
 </div>

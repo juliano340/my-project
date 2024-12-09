@@ -23,13 +23,15 @@ export class UserLoginComponent {
     if (user && bcrypt.compareSync(this.password, user.password)) {
       localStorage.setItem('loggedInUser', JSON.stringify(user));
       this.router.navigate(['/exibir']);
-    } else {
-      this.snackBar.open('Email ou senha incorretos', 'Fechar', {
-        duration: 2000,
-        verticalPosition: 'top',
-        horizontalPosition: 'right',
-      });
+
+      return;
     }
+
+    this.snackBar.open('Email ou senha incorretos', 'Fechar', {
+      duration: 2000,
+      verticalPosition: 'top',
+      horizontalPosition: 'right',
+    });
 
     this.email = '';
     this.password = '';

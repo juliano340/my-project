@@ -26,12 +26,12 @@ export class AdminUserTasksComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.userId = Number(this.route.snapshot.paramMap.get('id'));
     this.carregarDados();
+  }
 
-    this.routerSubscription = this.router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe(() => {
-        this.carregarDados();
-      });
+  ngOnDestroy(): void {
+    if (this.routerSubscription) {
+      this.routerSubscription.unsubscribe(); // Evita vazamentos de memória
+    }
   }
 
   carregarDados(): void {
@@ -70,7 +70,7 @@ export class AdminUserTasksComponent implements OnInit, OnDestroy {
     const confirmacao = window.confirm(
       'Você tem certeza de que deseja limpar a lista?'
     );
-
+    // FIXME: 13
     if (confirmacao) {
       this.listaService.limparLista(this.userId);
       this.tarefas = [];
@@ -79,12 +79,6 @@ export class AdminUserTasksComponent implements OnInit, OnDestroy {
         verticalPosition: 'top',
         horizontalPosition: 'right',
       });
-    }
-  }
-
-  ngOnDestroy(): void {
-    if (this.routerSubscription) {
-      this.routerSubscription.unsubscribe(); // Evita vazamentos de memória
     }
   }
 }

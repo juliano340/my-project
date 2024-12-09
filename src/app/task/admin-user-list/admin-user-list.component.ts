@@ -7,6 +7,7 @@ import { ListaServiceService } from '../lista-service.service';
   styleUrls: ['./admin-user-list.component.css'],
 })
 export class AdminUserListComponent implements OnInit {
+  // FIXME: 11
   users: any[] = []; // Dados dos usuários para exibir na tabela
 
   constructor(private listaService: ListaServiceService) {}
