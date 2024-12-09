@@ -60,7 +60,7 @@ export class ListaServiceService {
     return this.itens.find((task) => task.id === id);
   }
 
-  updateTask(updatedTask: any) {
+  updateTask(updatedTask: Item) {
     this.itens = this.itens.map((task) =>
       task.id === updatedTask.id ? updatedTask : task
     );
