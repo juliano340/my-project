@@ -13,6 +13,7 @@ export class UserRegisterComponent {
   constructor(private snackBar: MatSnackBar, private router: Router) {}
 
   user: User = {
+    // FIXME: 19
     id: 0,
     name: '',
     email: '',
@@ -23,9 +24,9 @@ export class UserRegisterComponent {
   register(): void {
     const users: User[] = JSON.parse(localStorage.getItem('users') || '[]');
 
-    this.user.id = users.length > 0 ? users[users.length - 1].id + 1 : 1;
+    this.user.id = users.length > 0 ? users[users.length - 1].id + 1 : 1; // FIXME: 6
 
-    const salt = bcrypt.genSaltSync(10);
+    const salt = bcrypt.genSaltSync(10); //
     this.user.password = bcrypt.hashSync(this.user.password, salt);
 
     users.push({ ...this.user });
@@ -46,8 +47,6 @@ export class UserRegisterComponent {
       horizontalPosition: 'right',
     });
 
-    setTimeout(() => {
-      this.router.navigate(['/login']);
-    }, 2000);
+    this.router.navigate(['/login']);
   }
 }

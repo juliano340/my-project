@@ -8,6 +8,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./adicionar-item.component.css'],
 })
 export class AdicionarItemComponent {
+  // FIXME: 11
   erroMensagem = '';
   categorias = ['Alimentos', 'Tarefas', 'Compras', 'Outros'];
 
