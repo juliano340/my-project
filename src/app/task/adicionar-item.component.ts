@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ListaServiceService } from './lista-service.service';
+import { ListaServiceService } from './task.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
