@@ -13,19 +13,19 @@ export class ListaServiceService {
   private tarefasAtualizadas = new Subject<void>();
   tarefasAtualizadas$ = this.tarefasAtualizadas.asObservable();
 
-  getAllUsers(): User[] {
+  getAllUsers() {
     return this.users;
   }
 
-  getItensByUser(userId: number): Item[] {
+  getItensByUser(userId: number) {
     return this.itens.filter((item) => item.userId === userId);
   }
 
-  getItens(): Item[] {
+  getItens() {
     return this.itens;
   }
 
-  adicionarItem(nome: string, categoria: string, userId: number): void {
+  adicionarItem(nome: string, categoria: string, userId: number) {
     if (nome.trim()) {
       const novoItem: Item = {
         id:
@@ -41,7 +41,7 @@ export class ListaServiceService {
     }
   }
 
-  removerItem(itemId: number, userId: number): void {
+  removerItem(itemId: number, userId: number) {
     // remoção: Normalmente é realizada por indices.
     this.itens = this.itens.filter(
       (item) => !(item.id === itemId && item.userId === userId)
@@ -50,17 +50,17 @@ export class ListaServiceService {
     this.notificarAtualizacao();
   }
 
-  limparLista(userId: number): void {
+  limparLista(userId: number) {
     this.itens = this.itens.filter((item) => item.userId !== userId);
     this.salvarNoLocalStorage();
     this.notificarAtualizacao();
   }
 
-  getTaskById(id: number): Item | undefined {
+  getTaskById(id: number) {
     return this.itens.find((task) => task.id === id);
   }
 
-  updateTask(updatedTask: any): void {
+  updateTask(updatedTask: any) {
     this.itens = this.itens.map((task) =>
       task.id === updatedTask.id ? updatedTask : task
     );
@@ -70,16 +70,16 @@ export class ListaServiceService {
     this.notificarAtualizacao();
   }
 
-  private salvarNoLocalStorage(): void {
+  private salvarNoLocalStorage() {
     localStorage.setItem('listaDeCompras', JSON.stringify(this.itens));
   }
 
-  private carregarDoLocalStorage(): Item[] {
+  private carregarDoLocalStorage() {
     const dados = localStorage.getItem('listaDeCompras');
     return dados ? JSON.parse(dados) : [];
   }
 
-  private notificarAtualizacao(): void {
+  private notificarAtualizacao() {
     this.tarefasAtualizadas.next();
   }
 }

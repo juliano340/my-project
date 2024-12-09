@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ListaServiceService } from './lista-service.service';
+import { Item } from './task.model';
 
 @Component({
   selector: 'app-task-edit',
@@ -8,7 +9,7 @@ import { ListaServiceService } from './lista-service.service';
   styleUrls: ['./task-edit.component.css'],
 })
 export class TaskEditComponent implements OnInit {
-  task: any = null;
+  task: Item | undefined = undefined;
 
   categorias = ['Alimentos', 'Tarefas', 'Compras', 'Outros'];
 
@@ -18,18 +19,18 @@ export class TaskEditComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     const taskId = Number(this.route.snapshot.paramMap.get('id'));
     this.task = this.listaService.getTaskById(taskId);
   }
 
   salvar() {
     if (this.task) {
-      this.listaService.updateTask(this.task); // Atualiza a tarefa no serviço
-      this.router.navigate(['/admin/tasks', this.task.userId]); // Redireciona para a lista de tarefas
+      this.listaService.updateTask(this.task);
+      this.router.navigate(['/admin/tasks', this.task.userId]);
     }
   }
-  cancelar(): void {
-    this.router.navigate(['/admin/tasks', this.task.userId]); // Redireciona sem salvar
+  cancelar() {
+    if (this.task) this.router.navigate(['/admin/tasks', this.task.userId]);
   }
 }

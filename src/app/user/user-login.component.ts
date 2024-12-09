@@ -15,7 +15,7 @@ export class UserLoginComponent {
 
   constructor(private router: Router, private snackBar: MatSnackBar) {}
 
-  login(): void {
+  login() {
     const users = JSON.parse(localStorage.getItem('users') || '[]');
 
     const user = users.find((u: User) => u.email === this.email);

@@ -2,12 +2,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #3f51b5; /* Azul Material */
+  background-color: #3f51b5;
   padding: 10px 20px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Sombra leve */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   margin: 20px auto;
-  max-width: 600px; /* Largura máxima para centralizar */
+  max-width: 600px;
 }
 
 .navbar a {
@@ -15,18 +15,18 @@
   color: white;
   font-family: "Roboto", sans-serif;
   font-size: 16px;
-  margin: 0 15px; /* Espaçamento entre os links */
+  margin: 0 15px;
   padding: 8px 16px;
   border-radius: 4px;
   transition: background-color 0.3s ease;
 }
 
 .navbar a:hover {
-  background-color: #303f9f; /* Azul mais escuro */
+  background-color: #303f9f;
 }
 
 .navbar a.active {
-  background-color: #ff9800; /* Laranja para o link ativo */
+  background-color: #ff9800;
   color: white;
   font-weight: bold;
 }

@@ -18,7 +18,7 @@ export class ExibirListaComponent implements OnInit {
     private snackBar: MatSnackBar
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     const loggedInUser = JSON.parse(
       localStorage.getItem('loggedInUser') || '{}'
     );
@@ -30,7 +30,7 @@ export class ExibirListaComponent implements OnInit {
     }
   }
 
-  removerItem(index: number): void {
+  removerItem(index: number) {
     const loggedInUser = JSON.parse(
       localStorage.getItem('loggedInUser') || '{}'
     );
@@ -57,7 +57,7 @@ export class ExibirListaComponent implements OnInit {
     }
   }
 
-  limparLista(): void {
+  limparLista() {
     if (!this.isAdmin) {
       this.snackBar.open(
         'Apenas administradores podem limpar a lista.',

@@ -21,7 +21,7 @@ export class UserRegisterComponent {
     role: '',
   };
 
-  register(): void {
+  register() {
     const users: User[] = JSON.parse(localStorage.getItem('users') || '[]');
 
     this.user.id = users.length > 0 ? users[users.length - 1].id + 1 : 1; // FIXME: 6

@@ -4,6 +4,7 @@ import { ListaServiceService } from './lista-service.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
+import { Item } from './task.model';
 
 @Component({
   selector: 'app-admin-user-tasks',
@@ -11,7 +12,7 @@ import { filter } from 'rxjs/operators';
   styleUrls: ['./admin-user-tasks.component.css'],
 })
 export class AdminUserTasksComponent implements OnInit, OnDestroy {
-  tarefas: any[] = [];
+  tarefas: Item[] = [];
   userName: string = '';
   userId: number = 0;
   routerSubscription!: Subscription;
@@ -23,18 +24,18 @@ export class AdminUserTasksComponent implements OnInit, OnDestroy {
     private snackBar: MatSnackBar
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.userId = Number(this.route.snapshot.paramMap.get('id'));
     this.carregarDados();
   }
 
-  ngOnDestroy(): void {
+  ngOnDestroy() {
     if (this.routerSubscription) {
-      this.routerSubscription.unsubscribe(); // Evita vazamentos de memória
+      this.routerSubscription.unsubscribe();
     }
   }
 
-  carregarDados(): void {
+  carregarDados() {
     const users = this.listaService.getAllUsers();
     const user = users.find((u) => u.id === this.userId);
 
@@ -44,7 +45,7 @@ export class AdminUserTasksComponent implements OnInit, OnDestroy {
     }
   }
 
-  removerItem(index: number): void {
+  removerItem(index: number) {
     const confirmacao = window.confirm(
       'Você tem certeza de que deseja excluir a tarefa?'
     );
@@ -65,7 +66,7 @@ export class AdminUserTasksComponent implements OnInit, OnDestroy {
     }
   }
 
-  limparLista(): void {
+  limparLista() {
     const confirmacao = window.confirm(
       'Você tem certeza de que deseja limpar a lista?'
     );

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ListaServiceService } from './lista-service.service';
+import { User } from '../user/users.model';
 
 @Component({
   selector: 'app-admin-user-list',
@@ -8,11 +9,11 @@ import { ListaServiceService } from './lista-service.service';
 })
 export class AdminUserListComponent implements OnInit {
   // FIXME: 11
-  users: any[] = []; // Dados dos usuários para exibir na tabela
+  users: User[] = [];
 
   constructor(private listaService: ListaServiceService) {}
 
   ngOnInit(): void {
-    this.users = this.listaService.getAllUsers(); // Busca os usuários do serviço
+    this.users = this.listaService.getAllUsers();
   }
 }
