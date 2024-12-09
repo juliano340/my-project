@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ListaServiceService } from '../lista-service.service';
+import { ListaServiceService } from './lista-service.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Item } from '../task.model';
+import { Item } from './task.model';
 
 @Component({
   selector: 'app-exibir-lista',

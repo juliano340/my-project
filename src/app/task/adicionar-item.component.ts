@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ListaServiceService } from '../lista-service.service';
+import { ListaServiceService } from './lista-service.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -17,7 +17,7 @@ export class AdicionarItemComponent {
     private snackBar: MatSnackBar
   ) {}
 
-  adicionar(novoItem: string, categoria: string): void {
+  adicionar(novoItem: string, categoria: string) {
     const loggedInUser = JSON.parse(
       localStorage.getItem('loggedInUser') || '{}'
     );

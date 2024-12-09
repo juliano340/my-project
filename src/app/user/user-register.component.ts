@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { User } from '../users.model';
+import { User } from './users.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import * as bcrypt from 'bcryptjs';

@@ -68,7 +68,6 @@ export class ListaServiceService {
     //FIXME: this.itens[Index] = updatedTask;
     this.salvarNoLocalStorage();
     this.notificarAtualizacao();
-    console.log('Tarefas atualizadas no localStorage:', this.itens);
   }
 
   private salvarNoLocalStorage(): void {
@@ -82,6 +81,5 @@ export class ListaServiceService {
 
   private notificarAtualizacao(): void {
     this.tarefasAtualizadas.next();
-    console.log('Notificação de atualização emitida.');
   }
 }

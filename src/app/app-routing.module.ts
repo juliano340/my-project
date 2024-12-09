@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AdicionarItemComponent } from './task/adicionar-item/adicionar-item.component';
-import { ExibirListaComponent } from './task/exibir-lista/exibir-lista.component';
-import { UserRegisterComponent } from './user/user-register/user-register.component';
-import { UserLoginComponent } from './user/user-login/user-login.component';
+import { AdicionarItemComponent } from './task/adicionar-item.component';
+import { ExibirListaComponent } from './task/exibir-lista.component';
+import { UserRegisterComponent } from './user/user-register.component';
+import { UserLoginComponent } from './user/user-login.component';
 import { authGuard } from './auth.guard';
 import { authProtectGuard } from './auth-protect.guard';
-import { AdminUserListComponent } from './task/admin-user-list/admin-user-list.component';
-import { AdminUserTasksComponent } from './task/admin-user-tasks/admin-user-tasks.component';
-import { TaskEditComponent } from './task/task-edit/task-edit.component';
+import { AdminUserListComponent } from './task/admin-user-list.component';
+import { AdminUserTasksComponent } from './task/admin-user-tasks.component';
+import { TaskEditComponent } from './task/task-edit.component';
 
 const routes: Routes = [
   { path: 'login', component: UserLoginComponent, canActivate: [authGuard] },

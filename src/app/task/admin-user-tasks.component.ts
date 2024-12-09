@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
-import { ListaServiceService } from '../lista-service.service';
+import { ListaServiceService } from './lista-service.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
@@ -41,7 +41,6 @@ export class AdminUserTasksComponent implements OnInit, OnDestroy {
     if (user) {
       this.userName = user.name;
       this.tarefas = this.listaService.getItensByUser(this.userId);
-      console.log('Tarefas atualizadas:', this.tarefas);
     }
   }
 

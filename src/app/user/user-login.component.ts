@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { User } from '../users.model';
+import { User } from './users.model';
 import * as bcrypt from 'bcryptjs';
 
 @Component({
