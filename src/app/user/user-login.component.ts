@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { User } from './users.model';
-import * as bcrypt from 'bcryptjs';
-import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from './user.service';
 
 @Component({
@@ -17,7 +14,6 @@ export class UserLoginComponent implements OnInit {
   loginForm: FormGroup = new FormGroup({});
 
   constructor(
-    private router: Router,
     private snackBar: MatSnackBar,
     private fb: FormBuilder,
     private userService: UserService
@@ -26,7 +22,6 @@ export class UserLoginComponent implements OnInit {
   ngOnInit() {
     this.initializeForm();
   }
-
   initializeForm() {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],

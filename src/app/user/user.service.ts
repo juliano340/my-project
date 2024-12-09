@@ -25,6 +25,12 @@ export class UserService {
       localStorage.setItem('loggedInUser', JSON.stringify(user));
       this.router.navigate(['/exibir']);
       return;
+    } else {
+      this.snackBar.open('Usuário ou senha incorretos', 'Fechar', {
+        duration: 2000,
+        verticalPosition: 'top',
+        horizontalPosition: 'right',
+      });
     }
   }
 }
