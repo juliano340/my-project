@@ -28,9 +28,7 @@ export class ListaService {
   adicionarItem(nome: string, categoria: string, userId: number) {
     if (nome.trim()) {
       const novoItem: Item = {
-        id:
-          this.itens.length > 0 ? this.itens[this.itens.length - 1].id + 1 : 1,
-        // FIXME: id: this.itens.length++, // TESTAR
+        id: this.itens.length > 0 ? this.itens.length + 1 : 1,
         nome,
         categoria,
         userId,
