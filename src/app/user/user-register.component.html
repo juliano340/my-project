@@ -1,45 +1,79 @@
-<h2>Registro de Usuário</h2>
-<form (ngSubmit)="register()" #userForm="ngForm">
-  <div>
-    <input
-      type="text"
-      id="name"
-      [(ngModel)]="user.name"
-      name="name"
-      required
-      placeholder="Nome"
-    />
-  </div>
-  <div>
-    <input
-      type="email"
-      id="email"
-      [(ngModel)]="user.email"
-      name="email"
-      placeholder="Email"
-      required
-    />
-  </div>
-  <div>
-    <input
-      type="password"
-      id="password"
-      [(ngModel)]="user.password"
-      name="password"
-      placeholder="Senha"
-      required
-    />
-  </div>
-  <div>
-    <select id="role" [(ngModel)]="user.role" name="role" required>
-      <option value="" disabled>Selecione uma opção</option>
-      <option value="user">Usuário</option>
-      <option value="admin">Administrador</option>
-    </select>
-  </div>
-  <button type="submit" [disabled]="userForm.invalid">Registrar</button>
-</form>
+<div class="container">
+  <h2>Registro de Usuário</h2>
+  <form [formGroup]="registerForm">
+    <div class="row">
+      <div class="form-group">
+        <label for="name">Nome:</label>
+        <input
+          type="text"
+          class="form-control is-invalid"
+          [class.is-invalid]="
+            registerForm.get('name')?.errors &&
+            registerForm.get('name')?.touched
+          "
+          id="name"
+          formControlName="name"
+        />
+        <div class="invalid-feedback">O campo nome é obrigatório</div>
+      </div>
 
-<div>
-  <p>Já possui uma conta? Faça <a routerLink="/login">Login</a></p>
+      <div class="form-group">
+        <label for="email">E-mail:</label>
+        <input
+          type="email"
+          class="form-control is-invalid"
+          [class.is-invalid]="
+            registerForm.get('email')?.errors &&
+            registerForm.get('email')?.touched
+          "
+          id="email"
+          formControlName="email"
+        />
+        <div class="invalid-feedback">
+          O campo e-mail é obrigatório. Preencha corretamente.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Senha:</label>
+        <input
+          type="password"
+          class="form-control is-invalid"
+          [class.is-invalid]="
+            registerForm.get('password')?.errors &&
+            registerForm.get('password')?.touched
+          "
+          id="password"
+          formControlName="password"
+        />
+        <div class="invalid-feedback">A senha é obrigatória</div>
+      </div>
+
+      <div class="form-group">
+        <label for="role">Perfil:</label>
+        <select
+          class="form-control"
+          [class.is-invalid]="
+            registerForm.get('role')?.errors &&
+            registerForm.get('role')?.touched
+          "
+          id="role"
+          formControlName="role"
+        >
+          <option value="" disabled>Selecione uma opção</option>
+          <option value="user">Usuário</option>
+          <option value="admin">Administrador</option>
+        </select>
+        <div class="invalid-feedback">O campo perfil é obrigatório</div>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary" (click)="submitForm()">
+      Registrar
+    </button>
+  </form>
+
+  <div>
+    <p>Já possui uma conta? Faça <a routerLink="/login">Login</a></p>
+  </div>
 </div>

@@ -1,52 +1,54 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { User } from './users.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import * as bcrypt from 'bcryptjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UserService } from './user.service';
 
 @Component({
   selector: 'app-user-register',
   templateUrl: './user-register.component.html',
   styleUrls: ['./user-register.component.css'],
 })
-export class UserRegisterComponent {
-  constructor(private snackBar: MatSnackBar, private router: Router) {}
+export class UserRegisterComponent implements OnInit {
+  registerForm: FormGroup = new FormGroup({});
 
-  user: User = {
-    // FIXME: 19
-    id: 0,
-    name: '',
-    email: '',
-    password: '',
-    role: '',
-  };
+  constructor(
+    private snackBar: MatSnackBar,
+    private router: Router,
+    private fb: FormBuilder,
+    private userService: UserService
+  ) {}
 
-  register() {
-    const users: User[] = JSON.parse(localStorage.getItem('users') || '[]');
+  ngOnInit() {
+    this.initializeForm();
+  }
 
-    this.user.id = users.length > 0 ? users[users.length - 1].id + 1 : 1; // FIXME: 6
-
-    const salt = bcrypt.genSaltSync(10); //
-    this.user.password = bcrypt.hashSync(this.user.password, salt);
-
-    users.push({ ...this.user });
-
-    localStorage.setItem('users', JSON.stringify(users));
-
-    this.user = {
-      id: 0,
-      name: '',
-      email: '',
-      password: '',
-      role: 'user',
-    };
-
-    this.snackBar.open('Usuário adicionado com sucesso!', 'Fechar', {
-      duration: 2000,
-      verticalPosition: 'top',
-      horizontalPosition: 'right',
+  initializeForm() {
+    this.registerForm = this.fb.group({
+      name: ['', [Validators.required, Validators.minLength(1)]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(1)]],
+      role: ['', [Validators.required]],
     });
+  }
 
-    this.router.navigate(['/login']);
+  submitForm() {
+    if (!this.registerForm.valid) {
+      this.snackBar.open('Preencha todos os campos corretamente!', 'Fechar', {
+        duration: 2000,
+        verticalPosition: 'top',
+        horizontalPosition: 'right',
+      });
+      return;
+    }
+
+    this.userService.register(
+      this.registerForm.value.name,
+      this.registerForm.value.email,
+      this.registerForm.value.password,
+      this.registerForm.value.role
+    );
   }
 }

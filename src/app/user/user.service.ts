@@ -14,6 +14,7 @@ export class UserService {
     const users = JSON.parse(localStorage.getItem('users') || '[]');
     return users;
   }
+
   login(email: string, password: string) {
     const users = this.getUsers();
 
@@ -32,5 +33,43 @@ export class UserService {
         horizontalPosition: 'right',
       });
     }
+  }
+
+  register(name: string, email: string, password: string, role: string) {
+    const users = this.getUsers();
+
+    let user: User = {
+      id: users.length > 0 ? users.length + 1 : 1,
+      name,
+      email,
+      password,
+      role,
+    };
+
+    const salt = bcrypt.genSaltSync(10);
+
+    user.password = bcrypt.hashSync(user.password, salt);
+
+    users.push({ ...user });
+
+    localStorage.setItem('users', JSON.stringify(users));
+
+    user = {
+      id: 0,
+      name: '',
+      email: '',
+      password: '',
+      role: 'user',
+    };
+
+    this.snackBar.open('Usuário adicionado com sucesso!', 'Fechar', {
+      duration: 2000,
+      verticalPosition: 'top',
+      horizontalPosition: 'right',
+    });
+
+    this.router.navigate(['/login']);
+
+    console.log(user);
   }
 }
