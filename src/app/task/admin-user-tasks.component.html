@@ -1,11 +1,12 @@
 <app-task-menu></app-task-menu>
 <h2 *ngIf="userName">Tarefas de {{ userName }}</h2>
+<h2 *ngIf="!userName" class="">Usuário não encontrado</h2>
 
 <div
-  *ngIf="tarefas.length === 0"
+  *ngIf="tarefas.length === 0 && userName"
   class="alert alert-danger text-center w-25 mx-auto"
 >
-  <b>Ops</b>... Usuário não encontrado! 😞
+  Ops... nenhuma tarefa encontrada! 😞
 </div>
 
 <mat-list *ngIf="tarefas.length > 0">
