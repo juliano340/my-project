@@ -10,7 +10,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./adicionar-item.component.css'],
 })
 export class AdicionarItemComponent implements OnInit {
-  // FIXME: 11
   erroMensagem = '';
   categorias = ['Alimentos', 'Tarefas', 'Compras', 'Outros'];
   addForm: FormGroup = new FormGroup({});

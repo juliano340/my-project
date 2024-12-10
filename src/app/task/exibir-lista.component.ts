@@ -45,7 +45,7 @@ export class ExibirListaComponent implements OnInit {
 
     if (loggedInUser?.id) {
       const itemId = this.itens[index]?.id;
-      this.listaService.deleteItem(itemId, loggedInUser.id);
+      this.listaService.deleteItem(itemId);
       this.itens.splice(index, 1);
       this.totalItens = this.itens.length;
 

@@ -55,9 +55,8 @@ export class AdminUserTasksComponent implements OnInit, OnDestroy {
       return;
     }
     const itemId = this.tarefas[index]?.id;
-
     if (itemId) {
-      this.listaService.deleteItem(itemId, this.userId);
+      this.listaService.deleteItem(itemId);
       this.tarefas.splice(index, 1);
       this.snackBar.open('Tarefa removida com sucesso!', 'Fechar', {
         duration: 3000,
@@ -71,15 +70,16 @@ export class AdminUserTasksComponent implements OnInit, OnDestroy {
     const confirmacao = window.confirm(
       'Você tem certeza de que deseja limpar a lista?'
     );
-    // FIXME: 13
-    if (confirmacao) {
-      this.listaService.clearLista(this.userId);
-      this.tarefas = [];
-      this.snackBar.open('Todas as tarefas foram removidas!', 'Fechar', {
-        duration: 3000,
-        verticalPosition: 'top',
-        horizontalPosition: 'right',
-      });
+
+    if (!confirmacao) {
+      return;
     }
+    this.listaService.clearLista(this.userId);
+    this.tarefas = [];
+    this.snackBar.open('Todas as tarefas foram removidas!', 'Fechar', {
+      duration: 3000,
+      verticalPosition: 'top',
+      horizontalPosition: 'right',
+    });
   }
 }

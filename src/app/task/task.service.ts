@@ -36,24 +36,18 @@ export class ListaService {
       };
       this.itens.push(novoItem);
       this.saveInLocalStorage();
-      this.notificarAtualizacao();
     }
   }
 
-  deleteItem(itemId: number, userId: number) {
-    // remoção: Normalmente é realizada por indices.
-
-    this.itens = this.itens.filter(
-      (item) => !(item.id === itemId && item.userId === userId)
-    );
+  deleteItem(itemId: number) {
+    const itemIndex = this.itens.findIndex((item) => item.id === itemId);
+    this.itens.splice(itemIndex, 1);
     this.saveInLocalStorage();
-    this.notificarAtualizacao();
   }
 
   clearLista(userId: number) {
     this.itens = this.itens.filter((item) => item.userId !== userId);
     this.saveInLocalStorage();
-    this.notificarAtualizacao();
   }
 
   getItemPorId(id: number) {
@@ -61,13 +55,11 @@ export class ListaService {
   }
 
   updateItem(updatedTask: Item) {
-    this.itens = this.itens.map((task) =>
-      task.id === updatedTask.id ? updatedTask : task
+    const itemIndex = this.itens.findIndex(
+      (item) => item.id === updatedTask.id
     );
-
-    //FIXME: this.itens[Index] = updatedTask;
+    this.itens[itemIndex] = updatedTask;
     this.saveInLocalStorage();
-    this.notificarAtualizacao();
   }
 
   private saveInLocalStorage() {
@@ -78,6 +70,4 @@ export class ListaService {
     const dados = localStorage.getItem('listaDeCompras');
     return dados ? JSON.parse(dados) : [];
   }
-
-  private notificarAtualizacao() {}
 }
