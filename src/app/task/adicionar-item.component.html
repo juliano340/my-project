@@ -1,18 +1,51 @@
 <app-task-menu></app-task-menu>
-<h2>Adicionar Item</h2>
-<div class="form">
-  <input #novoItem type="text" placeholder="Novo item" />
-  <select #categoria>
-    <option *ngFor="let cat of categorias" [value]="cat">{{ cat }}</option>
-  </select>
-  <!-- FIXME: 9 -->
-  <button
-    (click)="adicionar(novoItem.value, categoria.value); novoItem.value = ''"
-  >
-    <!--  FIXME: 10 -->
-    Adicionar
-  </button>
-</div>
-<div class="erro" *ngIf="erroMensagem">
-  {{ erroMensagem }}
+<div class="container col-lg-3">
+  <h2>Adicionar Item</h2>
+  <form [formGroup]="addForm">
+    <div class="row">
+      <div class="form-group">
+        <label for="nome">Novo item:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="nome"
+          name="nome"
+          class="form-control is-invalid"
+          [class.is-invalid]="
+            addForm.get('nome')?.errors && addForm.get('nome')?.touched
+          "
+          formControlName="nome"
+        />
+        <div class="invalid-feedback">Campo obrigatório</div>
+      </div>
+
+      <div class="form-group">
+        <label for="categoria">Categoria:</label>
+        <select
+          class="form-control"
+          [class.is-invalid]="
+            addForm.get('categoria')?.errors &&
+            addForm.get('categoria')?.touched
+          "
+          id="categoria"
+          formControlName="categoria"
+        >
+          <option *ngFor="let cat of categorias" [value]="cat">
+            {{ cat }}
+          </option>
+        </select>
+        <div class="invalid-feedback">Campo obrigatório</div>
+      </div>
+
+      <div class="form-group d-flex align-items-center">
+        <button
+          type="submit"
+          class="btn btn-primary mt-3"
+          (click)="submitForm()"
+        >
+          Adicionar
+        </button>
+      </div>
+    </div>
+  </form>
 </div>

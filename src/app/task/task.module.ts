@@ -12,7 +12,7 @@ import { AdminUserListComponent } from './admin-user-list.component';
 import { AdminUserTasksComponent } from './admin-user-tasks.component';
 import { MatTableModule } from '@angular/material/table';
 import { TaskEditComponent } from './task-edit.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -32,6 +32,7 @@ import { FormsModule } from '@angular/forms';
     RouterModule,
     MatTableModule,
     FormsModule,
+    ReactiveFormsModule,
   ],
   exports: [AdicionarItemComponent, ExibirListaComponent, TaskMenuComponent],
 })

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ListaServiceService } from './task.service';
+import { ListaService } from './task.service';
 import { Item } from './task.model';
 
 @Component({
@@ -15,7 +15,7 @@ export class TaskEditComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private listaService: ListaServiceService,
+    private listaService: ListaService,
     private router: Router
   ) {}
 

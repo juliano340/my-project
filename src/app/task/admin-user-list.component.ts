@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ListaServiceService } from './task.service';
+import { ListaService } from './task.service';
 import { User } from '../user/users.model';
 
 @Component({
@@ -11,7 +11,7 @@ export class AdminUserListComponent implements OnInit {
   // FIXME: 11
   users: User[] = [];
 
-  constructor(private listaService: ListaServiceService) {}
+  constructor(private listaService: ListaService) {}
 
   ngOnInit(): void {
     this.users = this.listaService.getAllUsers();

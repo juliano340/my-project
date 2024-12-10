@@ -10,6 +10,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class UserService {
   constructor(private router: Router, private snackBar: MatSnackBar) {}
 
+  getLoggedInUser() {
+    return JSON.parse(localStorage.getItem('loggedInUser') || '{}');
+  }
   getUsers() {
     const users = JSON.parse(localStorage.getItem('users') || '[]');
     return users;
@@ -69,7 +72,5 @@ export class UserService {
     });
 
     this.router.navigate(['/login']);
-
-    console.log(user);
   }
 }

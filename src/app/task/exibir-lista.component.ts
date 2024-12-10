@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ListaServiceService } from './task.service';
+import { ListaService } from './task.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Item } from './task.model';
 
@@ -14,7 +14,7 @@ export class ExibirListaComponent implements OnInit {
   isAdmin: boolean = false;
 
   constructor(
-    private listaService: ListaServiceService,
+    private listaService: ListaService,
     private snackBar: MatSnackBar
   ) {}
 

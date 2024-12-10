@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
-import { ListaServiceService } from './task.service';
+import { ListaService } from './task.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
@@ -20,7 +20,7 @@ export class AdminUserTasksComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private listaService: ListaServiceService,
+    private listaService: ListaService,
     private snackBar: MatSnackBar
   ) {}
 

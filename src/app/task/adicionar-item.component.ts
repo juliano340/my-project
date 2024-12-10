@@ -1,49 +1,60 @@
-import { Component } from '@angular/core';
-import { ListaServiceService } from './task.service';
+import { UserService } from './../user/user.service';
+import { Component, OnInit } from '@angular/core';
+import { ListaService } from './task.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-adicionar-item',
   templateUrl: './adicionar-item.component.html',
   styleUrls: ['./adicionar-item.component.css'],
 })
-export class AdicionarItemComponent {
+export class AdicionarItemComponent implements OnInit {
   // FIXME: 11
   erroMensagem = '';
   categorias = ['Alimentos', 'Tarefas', 'Compras', 'Outros'];
+  addForm: FormGroup = new FormGroup({});
 
   constructor(
-    private listaService: ListaServiceService,
-    private snackBar: MatSnackBar
+    private listaService: ListaService,
+    private snackBar: MatSnackBar,
+    private fb: FormBuilder,
+    private UserService: UserService
   ) {}
 
-  adicionar(novoItem: string, categoria: string) {
-    const loggedInUser = JSON.parse(
-      localStorage.getItem('loggedInUser') || '{}'
-    );
+  ngOnInit() {
+    this.initializeForm();
+  }
 
-    if (!novoItem.trim()) {
-      this.erroMensagem = 'O item não pode ser vazio.';
+  initializeForm() {
+    this.addForm = this.fb.group({
+      nome: ['', [Validators.required]],
+      categoria: ['', [Validators.required]],
+    });
+  }
+
+  submitForm() {
+    if (!this.addForm.valid) {
+      this.snackBar.open('Preencha todos os campos corretamente!', 'Fechar', {
+        duration: 2000,
+        verticalPosition: 'top',
+        horizontalPosition: 'right',
+      });
       return;
     }
 
+    const loggedInUser = this.UserService.getLoggedInUser();
     const userId = loggedInUser.id;
-
-    if (
-      this.listaService
-        .getItensByUser(userId)
-        .some((item) => item.nome === novoItem)
-    ) {
-      this.erroMensagem = 'O item já existe na lista.';
-      return;
-    }
-
-    this.listaService.adicionarItem(novoItem, categoria, userId);
-    this.erroMensagem = '';
+    this.listaService.adicionarItem(
+      this.addForm.value.nome,
+      this.addForm.value.categoria,
+      userId
+    );
     this.snackBar.open('Item adicionado com sucesso!', 'Fechar', {
       duration: 3000,
       verticalPosition: 'top',
       horizontalPosition: 'right',
     });
+    this.addForm.reset();
   }
 }

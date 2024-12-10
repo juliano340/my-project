@@ -1,3 +1,4 @@
+import { UserService } from './../user/user.service';
 import { Injectable } from '@angular/core';
 import { Item } from './task.model';
 import { User } from '../user/users.model';
@@ -6,12 +7,11 @@ import { Subject } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class ListaServiceService {
-  private itens: Item[] = this.carregarDoLocalStorage();
-  private users: User[] = JSON.parse(localStorage.getItem('users') || '[]');
+export class ListaService {
+  constructor(private userService: UserService) {}
 
-  private tarefasAtualizadas = new Subject<void>();
-  tarefasAtualizadas$ = this.tarefasAtualizadas.asObservable();
+  private itens: Item[] = this.carregarDoLocalStorage();
+  private users: User[] = this.userService.getUsers();
 
   getAllUsers() {
     return this.users;
@@ -79,7 +79,5 @@ export class ListaServiceService {
     return dados ? JSON.parse(dados) : [];
   }
 
-  private notificarAtualizacao() {
-    this.tarefasAtualizadas.next();
-  }
+  private notificarAtualizacao() {}
 }
