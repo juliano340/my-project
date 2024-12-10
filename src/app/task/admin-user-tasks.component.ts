@@ -12,7 +12,7 @@ import { Item } from './task.model';
   templateUrl: './admin-user-tasks.component.html',
   styleUrls: ['./admin-user-tasks.component.css'],
 })
-export class AdminUserTasksComponent implements OnInit, OnDestroy {
+export class AdminUserTasksComponent implements OnInit {
   tarefas: Item[] = [];
   userName: string = '';
   userId: number = 0;
@@ -30,12 +30,6 @@ export class AdminUserTasksComponent implements OnInit, OnDestroy {
     this.carregarDados();
   }
 
-  ngOnDestroy() {
-    if (this.routerSubscription) {
-      this.routerSubscription.unsubscribe();
-    }
-  }
-
   carregarDados() {
     const users = this.listaService.getUsuarios();
     const user = users.find((u) => u.id === this.userId);
@@ -45,7 +39,6 @@ export class AdminUserTasksComponent implements OnInit, OnDestroy {
       this.tarefas = this.listaService.getItensPorUsuario(this.userId);
     }
   }
-
   removerItem(index: number) {
     const confirmacao = window.confirm(
       'Você tem certeza de que deseja excluir a tarefa?'

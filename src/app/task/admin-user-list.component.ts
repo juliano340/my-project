@@ -8,7 +8,6 @@ import { User } from '../user/users.model';
   styleUrls: ['./admin-user-list.component.css'],
 })
 export class AdminUserListComponent implements OnInit {
-  // FIXME: 11
   users: User[] = [];
 
   constructor(private listaService: ListaService) {}
