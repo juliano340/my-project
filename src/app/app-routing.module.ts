@@ -42,7 +42,12 @@ const routes: Routes = [
     data: { requiresAdmin: true },
   },
 
-  { path: 'task/edit/:id', component: TaskEditComponent },
+  {
+    path: 'task/edit/:id',
+    component: TaskEditComponent,
+    canActivate: [authProtectGuard],
+    data: { requiresAdmin: true },
+  },
 
   { path: '**', redirectTo: 'login', pathMatch: 'full' },
 ];

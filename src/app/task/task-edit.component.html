@@ -1,29 +1,46 @@
 <app-task-menu></app-task-menu>
 
-<h2>Editar Tarefa</h2>
+<div class="container">
+  <h2>Editar Tarefa</h2>
+</div>
 
-<form *ngIf="task" (ngSubmit)="salvar()">
-  <div>
-    <label for="nome">Nome</label>
-    <input id="nome" type="text" [(ngModel)]="task.nome" name="nome" required />
+<form *ngIf="task" [formGroup]="editForm">
+  <div class="form-group">
+    <label for="nome">Novo item:</label>
+    <input
+      [(ngModel)]="task.nome"
+      type="text"
+      class="form-control"
+      id="nome"
+      name="nome"
+      class="form-control is-invalid"
+      [class.is-invalid]="
+        editForm.get('nome')?.errors && editForm.get('nome')?.touched
+      "
+      formControlName="nome"
+    />
+    <div class="invalid-feedback">Campo obrigatório</div>
   </div>
-
-  <div>
-    <label for="categoria">Categoria</label>
+  <div class="form-group">
+    <label for="categoria">Categoria:</label>
     <select
       id="categoria"
       [(ngModel)]="task.categoria"
       name="categoria"
       required
+      formControlName="categoria"
     >
       <option *ngFor="let cat of categorias" [value]="cat">{{ cat }}</option>
     </select>
   </div>
-
-  <button type="submit">Salvar</button>
-  <button type="button" (click)="cancelar()">Cancelar</button>
+  <div class="form-group">
+    <button type="submit" (click)="salvar()">Salvar</button>
+    <button type="button" (click)="cancelar()">Cancelar</button>
+  </div>
 </form>
 
 <div *ngIf="!task">
-  <p>Tarefa não encontrada.</p>
+  <p class="alert alert-danger text-center w-25 mx-auto">
+    Tarefa não encontrada.
+  </p>
 </div>

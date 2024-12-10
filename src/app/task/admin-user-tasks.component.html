@@ -1,7 +1,12 @@
 <app-task-menu></app-task-menu>
-<h2>Tarefas de {{ userName }}</h2>
+<h2 *ngIf="userName">Tarefas de {{ userName }}</h2>
 
-<div *ngIf="tarefas.length === 0" class="empty-list">Nenhum item na lista.</div>
+<div
+  *ngIf="tarefas.length === 0"
+  class="alert alert-danger text-center w-25 mx-auto"
+>
+  <b>Ops</b>... Usuário não encontrado! 😞
+</div>
 
 <mat-list *ngIf="tarefas.length > 0">
   <mat-list-item *ngFor="let item of tarefas; let i = index">
