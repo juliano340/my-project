@@ -24,7 +24,7 @@ export class ExibirListaComponent implements OnInit {
     );
 
     if (loggedInUser?.id) {
-      this.itens = this.listaService.getItensByUser(loggedInUser.id);
+      this.itens = this.listaService.getItensPorUsuario(loggedInUser.id);
       this.totalItens = this.itens.length;
       this.isAdmin = loggedInUser.role === 'admin';
     }
@@ -45,7 +45,7 @@ export class ExibirListaComponent implements OnInit {
 
     if (loggedInUser?.id) {
       const itemId = this.itens[index]?.id;
-      this.listaService.removerItem(itemId, loggedInUser.id);
+      this.listaService.deleteItem(itemId, loggedInUser.id);
       this.itens.splice(index, 1);
       this.totalItens = this.itens.length;
 
@@ -80,7 +80,7 @@ export class ExibirListaComponent implements OnInit {
         localStorage.getItem('loggedInUser') || '{}'
       );
       if (loggedInUser?.id) {
-        this.listaService.limparLista(loggedInUser.id);
+        this.listaService.clearLista(loggedInUser.id);
         this.itens = [];
         this.totalItens = 0;
 

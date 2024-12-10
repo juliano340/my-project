@@ -37,12 +37,12 @@ export class AdminUserTasksComponent implements OnInit, OnDestroy {
   }
 
   carregarDados() {
-    const users = this.listaService.getAllUsers();
+    const users = this.listaService.getUsuarios();
     const user = users.find((u) => u.id === this.userId);
 
     if (user) {
       this.userName = user.name;
-      this.tarefas = this.listaService.getItensByUser(this.userId);
+      this.tarefas = this.listaService.getItensPorUsuario(this.userId);
     }
   }
 
@@ -57,7 +57,7 @@ export class AdminUserTasksComponent implements OnInit, OnDestroy {
     const itemId = this.tarefas[index]?.id;
 
     if (itemId) {
-      this.listaService.removerItem(itemId, this.userId);
+      this.listaService.deleteItem(itemId, this.userId);
       this.tarefas.splice(index, 1);
       this.snackBar.open('Tarefa removida com sucesso!', 'Fechar', {
         duration: 3000,
@@ -73,7 +73,7 @@ export class AdminUserTasksComponent implements OnInit, OnDestroy {
     );
     // FIXME: 13
     if (confirmacao) {
-      this.listaService.limparLista(this.userId);
+      this.listaService.clearLista(this.userId);
       this.tarefas = [];
       this.snackBar.open('Todas as tarefas foram removidas!', 'Fechar', {
         duration: 3000,

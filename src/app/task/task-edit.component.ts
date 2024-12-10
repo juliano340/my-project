@@ -27,7 +27,7 @@ export class TaskEditComponent implements OnInit {
   ngOnInit() {
     this.initializeForm();
     const taskId = Number(this.route.snapshot.paramMap.get('id'));
-    this.task = this.listaService.getTaskById(taskId);
+    this.task = this.listaService.getItemPorId(taskId);
 
     if (this.task) {
       this.originalTask = { ...this.task };
@@ -56,7 +56,7 @@ export class TaskEditComponent implements OnInit {
     }
 
     if (this.task) {
-      this.listaService.updateTask(this.task);
+      this.listaService.updateItem(this.task);
       this.router.navigate(['/admin/tasks', this.task.userId]);
     }
   }

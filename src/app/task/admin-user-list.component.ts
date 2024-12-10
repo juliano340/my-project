@@ -14,6 +14,6 @@ export class AdminUserListComponent implements OnInit {
   constructor(private listaService: ListaService) {}
 
   ngOnInit(): void {
-    this.users = this.listaService.getAllUsers();
+    this.users = this.listaService.getUsuarios();
   }
 }

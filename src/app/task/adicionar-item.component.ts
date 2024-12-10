@@ -45,7 +45,7 @@ export class AdicionarItemComponent implements OnInit {
 
     const loggedInUser = this.UserService.getLoggedInUser();
     const userId = loggedInUser.id;
-    this.listaService.adicionarItem(
+    this.listaService.addItem(
       this.addForm.value.nome,
       this.addForm.value.categoria,
       userId

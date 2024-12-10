@@ -10,14 +10,14 @@ import { Subject } from 'rxjs';
 export class ListaService {
   constructor(private userService: UserService) {}
 
-  private itens: Item[] = this.carregarDoLocalStorage();
+  private itens: Item[] = this.loadFromLocalStorage();
   private users: User[] = this.userService.getUsers();
 
-  getAllUsers() {
+  getUsuarios() {
     return this.users;
   }
 
-  getItensByUser(userId: number) {
+  getItensPorUsuario(userId: number) {
     return this.itens.filter((item) => item.userId === userId);
   }
 
@@ -25,7 +25,7 @@ export class ListaService {
     return this.itens;
   }
 
-  adicionarItem(nome: string, categoria: string, userId: number) {
+  addItem(nome: string, categoria: string, userId: number) {
     if (nome.trim()) {
       const novoItem: Item = {
         id:
@@ -35,45 +35,46 @@ export class ListaService {
         userId,
       };
       this.itens.push(novoItem);
-      this.salvarNoLocalStorage();
+      this.saveInLocalStorage();
       this.notificarAtualizacao();
     }
   }
 
-  removerItem(itemId: number, userId: number) {
+  deleteItem(itemId: number, userId: number) {
     // remoção: Normalmente é realizada por indices.
+
     this.itens = this.itens.filter(
       (item) => !(item.id === itemId && item.userId === userId)
     );
-    this.salvarNoLocalStorage();
+    this.saveInLocalStorage();
     this.notificarAtualizacao();
   }
 
-  limparLista(userId: number) {
+  clearLista(userId: number) {
     this.itens = this.itens.filter((item) => item.userId !== userId);
-    this.salvarNoLocalStorage();
+    this.saveInLocalStorage();
     this.notificarAtualizacao();
   }
 
-  getTaskById(id: number) {
+  getItemPorId(id: number) {
     return this.itens.find((task) => task.id === id);
   }
 
-  updateTask(updatedTask: Item) {
+  updateItem(updatedTask: Item) {
     this.itens = this.itens.map((task) =>
       task.id === updatedTask.id ? updatedTask : task
     );
 
     //FIXME: this.itens[Index] = updatedTask;
-    this.salvarNoLocalStorage();
+    this.saveInLocalStorage();
     this.notificarAtualizacao();
   }
 
-  private salvarNoLocalStorage() {
+  private saveInLocalStorage() {
     localStorage.setItem('listaDeCompras', JSON.stringify(this.itens));
   }
 
-  private carregarDoLocalStorage() {
+  private loadFromLocalStorage() {
     const dados = localStorage.getItem('listaDeCompras');
     return dados ? JSON.parse(dados) : [];
   }
