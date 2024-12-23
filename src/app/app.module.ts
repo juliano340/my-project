@@ -7,6 +7,8 @@ import { AppComponent } from './app.component';
 import { CommonComponentsModule } from './common/common.module';
 import { UserModule } from './user/user.module';
 import { TaskModule } from './task/task.module';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,6 +20,8 @@ import { TaskModule } from './task/task.module';
     CommonComponentsModule,
     UserModule,
     TaskModule,
+    MatDialogModule,
+    MatButtonModule,
   ],
   bootstrap: [AppComponent],
 })
