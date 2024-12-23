@@ -20,22 +20,20 @@ export class UserService {
 
   login(email: string, password: string) {
     const users = this.getUsers();
-
     const user = users.find((u: User) => u.email === email);
-
-    if (user) console.log(user);
 
     if (user && bcrypt.compareSync(password, user.password)) {
       localStorage.setItem('loggedInUser', JSON.stringify(user));
       this.router.navigate(['/exibir']);
+
       return;
-    } else {
-      this.snackBar.open('Usuário ou senha incorretos', 'Fechar', {
-        duration: 2000,
-        verticalPosition: 'top',
-        horizontalPosition: 'right',
-      });
     }
+
+    this.snackBar.open('Usuário ou senha incorretos', 'Fechar', {
+      duration: 2000,
+      verticalPosition: 'top',
+      horizontalPosition: 'right',
+    });
   }
 
   register(name: string, email: string, password: string, role: string) {
@@ -52,7 +50,6 @@ export class UserService {
     const salt = bcrypt.genSaltSync(10);
 
     user.password = bcrypt.hashSync(user.password, salt);
-
     users.push({ ...user });
 
     localStorage.setItem('users', JSON.stringify(users));

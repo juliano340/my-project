@@ -1,7 +1,10 @@
+import { UserService } from './../user/user.service';
 import { Component, OnInit } from '@angular/core';
 import { ListaService } from './task.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Item } from './task.model';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from './dialog.component';
 
 @Component({
   selector: 'app-exibir-lista',
@@ -15,7 +18,9 @@ export class ExibirListaComponent implements OnInit {
 
   constructor(
     private listaService: ListaService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog,
+    private UserService: UserService
   ) {}
 
   ngOnInit() {
@@ -30,31 +35,68 @@ export class ExibirListaComponent implements OnInit {
     }
   }
 
+  openDialog() {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      enterAnimationDuration: 0,
+      exitAnimationDuration: 0,
+    });
+
+    return dialogRef.afterClosed();
+  }
+  // observable: observa eventos e retorna
+  // subscribe: capta esses eventos
+  // promise: Promessa de retorno de algo no futuro
+
+  openDialogPromise() {
+    return new Promise((resolve) => {
+      const dialogRef = this.dialog.open(DialogComponent);
+
+      return dialogRef
+        .afterClosed()
+        .subscribe((result: boolean) => resolve(result));
+    });
+  }
+
   removerItem(index: number) {
-    const loggedInUser = JSON.parse(
-      localStorage.getItem('loggedInUser') || '{}'
-    );
+    const loggedInUser = this.UserService.getLoggedInUser();
 
-    const confirmacao = window.confirm(
-      'Você tem certeza de que deseja excluir a tarefa?'
-    );
+    this.openDialogPromise().then((result) => {
+      if (!result) {
+        return;
+      }
 
-    if (!confirmacao) {
-      return;
-    }
+      if (loggedInUser?.id) {
+        const itemId = this.itens[index]?.id;
+        this.listaService.deleteItem(itemId);
+        this.itens.splice(index, 1);
+        this.totalItens = this.itens.length;
 
-    if (loggedInUser?.id) {
-      const itemId = this.itens[index]?.id;
-      this.listaService.deleteItem(itemId);
-      this.itens.splice(index, 1);
-      this.totalItens = this.itens.length;
+        this.snackBar.open('Item removido com sucesso!', 'Fechar', {
+          duration: 3000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+        });
+      }
+    });
 
-      this.snackBar.open('Item removido com sucesso!', 'Fechar', {
-        duration: 3000,
-        verticalPosition: 'top',
-        horizontalPosition: 'right',
-      });
-    }
+    // this.openDialog().subscribe((resposta: boolean) => {
+    //   if (!resposta) {
+    //     return;
+    //   }
+
+    //   if (loggedInUser?.id) {
+    //     const itemId = this.itens[index]?.id;
+    //     this.listaService.deleteItem(itemId);
+    //     this.itens.splice(index, 1);
+    //     this.totalItens = this.itens.length;
+
+    //     this.snackBar.open('Item removido com sucesso!', 'Fechar', {
+    //       duration: 3000,
+    //       verticalPosition: 'top',
+    //       horizontalPosition: 'right',
+    //     });
+    //   }
+    // });
   }
 
   limparLista() {

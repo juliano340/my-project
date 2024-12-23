@@ -13,6 +13,7 @@ import { AdminUserTasksComponent } from './admin-user-tasks.component';
 import { MatTableModule } from '@angular/material/table';
 import { TaskEditComponent } from './task-edit.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DialogComponent } from './dialog.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AdminUserListComponent,
     AdminUserTasksComponent,
     TaskEditComponent,
+    DialogComponent,
   ],
   imports: [
     CommonModule,
@@ -34,6 +36,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     ReactiveFormsModule,
   ],
-  exports: [AdicionarItemComponent, ExibirListaComponent, TaskMenuComponent],
+  exports: [
+    AdicionarItemComponent,
+    ExibirListaComponent,
+    TaskMenuComponent,
+    DialogComponent,
+  ],
 })
 export class TaskModule {}

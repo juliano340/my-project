@@ -61,9 +61,10 @@ export class TaskEditComponent implements OnInit {
     }
   }
   cancelar() {
-    if (!this.editForm.valid) {
-      if (this.originalTask) this.editForm.patchValue(this.originalTask);
+    if (!this.editForm.valid && this.originalTask) {
+      this.editForm.patchValue(this.originalTask);
     }
+
     if (this.task) {
       this.router.navigate(['/admin/tasks', this.task.userId]);
     }
