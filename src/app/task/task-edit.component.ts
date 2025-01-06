@@ -27,11 +27,14 @@ export class TaskEditComponent implements OnInit {
   ngOnInit() {
     this.initializeForm();
     const taskId = Number(this.route.snapshot.paramMap.get('id'));
-    this.task = this.listaService.getItemPorId(taskId);
 
-    if (this.task) {
-      this.originalTask = { ...this.task };
-    }
+    this.listaService.getById(taskId).subscribe((task: Item) => {
+      this.task = task;
+
+      if (this.task) {
+        this.originalTask = { ...this.task };
+      }
+    });
   }
 
   initializeForm() {
@@ -56,8 +59,15 @@ export class TaskEditComponent implements OnInit {
     }
 
     if (this.task) {
-      this.listaService.updateItem(this.task);
-      this.router.navigate(['/admin/tasks', this.task.userId]);
+      this.listaService
+        .updateItem(
+          this.task.id,
+          this.editForm.value.nome,
+          this.editForm.value.categoria,
+          this.task.userId
+        )
+        .subscribe(() => {});
+      this.router.navigate(['/exibir']);
     }
   }
   cancelar() {
@@ -66,7 +76,7 @@ export class TaskEditComponent implements OnInit {
     }
 
     if (this.task) {
-      this.router.navigate(['/admin/tasks', this.task.userId]);
+      this.router.navigate(['/exibir']);
     }
   }
 }

@@ -9,6 +9,7 @@ import { UserModule } from './user/user.module';
 import { TaskModule } from './task/task.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,6 +23,7 @@ import { MatButtonModule } from '@angular/material/button';
     TaskModule,
     MatDialogModule,
     MatButtonModule,
+    HttpClientModule,
   ],
   bootstrap: [AppComponent],
 })

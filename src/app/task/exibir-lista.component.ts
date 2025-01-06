@@ -29,10 +29,22 @@ export class ExibirListaComponent implements OnInit {
     );
 
     if (loggedInUser?.id) {
-      this.itens = this.listaService.getItensPorUsuario(loggedInUser.id);
-      this.totalItens = this.itens.length;
-      this.isAdmin = loggedInUser.role === 'admin';
+      this.listaService.getAll().subscribe((itens) => {
+        this.itens = itens.filter((item) => item.userId === loggedInUser.id);
+        this.totalItens = this.itens.length;
+        this.isAdmin = loggedInUser.role === 'admin';
+      });
     }
+
+    // const loggedInUser = JSON.parse(
+    //   localStorage.getItem('loggedInUser') || '{}'
+    // );
+
+    // if (loggedInUser?.id) {
+    //   this.itens = this.listaService.getItensPorUsuario(loggedInUser.id);
+    //   this.totalItens = this.itens.length;
+    //   this.isAdmin = loggedInUser.role === 'admin';
+    // }
   }
 
   openDialog() {
