@@ -55,17 +55,5 @@ export class AdicionarItemComponent implements OnInit {
       horizontalPosition: 'right',
     });
     this.addForm.reset();
-
-    // this.listaService.addItem(
-    //   this.addForm.value.nome,
-    //   this.addForm.value.categoria,
-    //   userId
-    // );
-    // this.snackBar.open('Item adicionado com sucesso!', 'Fechar', {
-    //   duration: 3000,
-    //   verticalPosition: 'top',
-    //   horizontalPosition: 'right',
-    // });
-    // this.addForm.reset();
   }
 }

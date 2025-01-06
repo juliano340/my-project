@@ -73,26 +73,6 @@ export class AdminUserTasksComponent implements OnInit {
     });
   }
 
-  // removerItem(index: number) {
-  //   const confirmacao = window.confirm(
-  //     'Você tem certeza de que deseja excluir a tarefa?'
-  //   );
-
-  //   if (!confirmacao) {
-  //     return;
-  //   }
-  //   const itemId = this.tarefas[index]?.id;
-  //   if (itemId) {
-  //     this.listaService.deleteItem(itemId);
-  //     this.tarefas.splice(index, 1);
-  //     this.snackBar.open('Tarefa removida com sucesso!', 'Fechar', {
-  //       duration: 3000,
-  //       verticalPosition: 'top',
-  //       horizontalPosition: 'right',
-  //     });
-  //   }
-  // }
-
   limparLista() {
     this.openDialogPromise().then((result) => {
       if (!result) {
@@ -108,21 +88,4 @@ export class AdminUserTasksComponent implements OnInit {
       });
     });
   }
-
-  // limparLista() {
-  //   const confirmacao = window.confirm(
-  //     'Você tem certeza de que deseja limpar a lista?'
-  //   );
-
-  //   if (!confirmacao) {
-  //     return;
-  //   }
-  //   this.listaService.clearLista(this.userId);
-  //   this.tarefas = [];
-  //   this.snackBar.open('Todas as tarefas foram removidas!', 'Fechar', {
-  //     duration: 3000,
-  //     verticalPosition: 'top',
-  //     horizontalPosition: 'right',
-  //   });
-  // }
 }

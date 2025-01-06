@@ -10,10 +10,10 @@ export class DialogComponent {
   constructor(public dialogRef: MatDialogRef<DialogComponent>) {}
 
   onNoClick(): void {
-    this.dialogRef.close(false); // Retorna "Não"
+    this.dialogRef.close(false);
   }
 
   onYesClick(): void {
-    this.dialogRef.close(true); // Retorna "Sim"
+    this.dialogRef.close(true);
   }
 }
