@@ -70,7 +70,6 @@ export class ExibirListaComponent implements OnInit {
   }
 
   removerItem(index: number) {
-    //Pega o usuário logado
     const loggedInUser = this.UserService.getLoggedInUser();
 
     this.openDialogPromise().then((result) => {
@@ -138,29 +137,17 @@ export class ExibirListaComponent implements OnInit {
   }
 
   limparLista() {
-    if (!this.isAdmin) {
-      this.snackBar.open(
-        'Apenas administradores podem limpar a lista.',
-        'Fechar',
-        {
-          duration: 3000,
-          verticalPosition: 'top',
-          horizontalPosition: 'right',
-        }
-      );
-      return;
-    }
+    this.openDialogPromise().then((result) => {
+      if (!result) {
+        return;
+      }
 
-    const confirmacao = window.confirm(
-      'Você tem certeza de que deseja limpar a lista?'
-    );
-
-    if (confirmacao) {
       const loggedInUser = JSON.parse(
         localStorage.getItem('loggedInUser') || '{}'
       );
+
       if (loggedInUser?.id) {
-        this.listaService.clearLista(loggedInUser.id);
+        this.listaService.clearLista(loggedInUser.id).subscribe(() => {});
         this.itens = [];
         this.totalItens = 0;
 
@@ -170,6 +157,12 @@ export class ExibirListaComponent implements OnInit {
           horizontalPosition: 'right',
         });
       }
-    }
+
+      this.snackBar.open('Itens removidos com sucesso!', 'Fechar', {
+        duration: 3000,
+        verticalPosition: 'top',
+        horizontalPosition: 'right',
+      });
+    });
   }
 }

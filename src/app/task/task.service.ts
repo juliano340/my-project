@@ -81,10 +81,14 @@ export class ListaService {
   //   this.saveInLocalStorage();
   // }
 
-  clearLista(userId: number) {
-    this.itens = this.itens.filter((item) => item.userId !== userId);
-    this.saveInLocalStorage();
+  clearLista(userId: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/all/${userId}`);
   }
+
+  // clearLista(userId: number) {
+  //   this.itens = this.itens.filter((item) => item.userId !== userId);
+  //   this.saveInLocalStorage();
+  // }
 
   getItemPorId(id: number) {
     return this.itens.find((task) => task.id === id);
