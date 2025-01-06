@@ -6,6 +6,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { Item } from './task.model';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from './dialog.component';
 
 @Component({
   selector: 'app-admin-user-tasks',
@@ -22,7 +24,8 @@ export class AdminUserTasksComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private listaService: ListaService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -36,43 +39,90 @@ export class AdminUserTasksComponent implements OnInit {
 
     if (user) {
       this.userName = user.name;
-      this.tarefas = this.listaService.getItensPorUsuario(this.userId);
-    }
-  }
-  removerItem(index: number) {
-    const confirmacao = window.confirm(
-      'Você tem certeza de que deseja excluir a tarefa?'
-    );
-
-    if (!confirmacao) {
-      return;
-    }
-    const itemId = this.tarefas[index]?.id;
-    if (itemId) {
-      this.listaService.deleteItem(itemId);
-      this.tarefas.splice(index, 1);
-      this.snackBar.open('Tarefa removida com sucesso!', 'Fechar', {
-        duration: 3000,
-        verticalPosition: 'top',
-        horizontalPosition: 'right',
+      this.listaService.getAll().subscribe((data) => {
+        this.tarefas = data.filter((item) => item.userId === this.userId);
       });
     }
   }
 
-  limparLista() {
-    const confirmacao = window.confirm(
-      'Você tem certeza de que deseja limpar a lista?'
-    );
+  openDialogPromise() {
+    return new Promise((resolve) => {
+      const dialogRef = this.dialog.open(DialogComponent);
 
-    if (!confirmacao) {
-      return;
-    }
-    this.listaService.clearLista(this.userId);
-    this.tarefas = [];
-    this.snackBar.open('Todas as tarefas foram removidas!', 'Fechar', {
-      duration: 3000,
-      verticalPosition: 'top',
-      horizontalPosition: 'right',
+      return dialogRef
+        .afterClosed()
+        .subscribe((result: boolean) => resolve(result));
     });
   }
+  removerItem(index: number) {
+    this.openDialogPromise().then((result) => {
+      if (!result) {
+        return;
+      }
+
+      const itemId = this.tarefas[index]?.id;
+      if (itemId) {
+        this.listaService.deleteItem(itemId).subscribe(() => {});
+        this.tarefas.splice(index, 1);
+        this.snackBar.open('Tarefa removida com sucesso!', 'Fechar', {
+          duration: 3000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+        });
+      }
+    });
+  }
+
+  // removerItem(index: number) {
+  //   const confirmacao = window.confirm(
+  //     'Você tem certeza de que deseja excluir a tarefa?'
+  //   );
+
+  //   if (!confirmacao) {
+  //     return;
+  //   }
+  //   const itemId = this.tarefas[index]?.id;
+  //   if (itemId) {
+  //     this.listaService.deleteItem(itemId);
+  //     this.tarefas.splice(index, 1);
+  //     this.snackBar.open('Tarefa removida com sucesso!', 'Fechar', {
+  //       duration: 3000,
+  //       verticalPosition: 'top',
+  //       horizontalPosition: 'right',
+  //     });
+  //   }
+  // }
+
+  limparLista() {
+    this.openDialogPromise().then((result) => {
+      if (!result) {
+        return;
+      }
+
+      this.listaService.clearLista(this.userId).subscribe(() => {});
+      this.tarefas = [];
+      this.snackBar.open('Todas as tarefas foram removidas!', 'Fechar', {
+        duration: 3000,
+        verticalPosition: 'top',
+        horizontalPosition: 'right',
+      });
+    });
+  }
+
+  // limparLista() {
+  //   const confirmacao = window.confirm(
+  //     'Você tem certeza de que deseja limpar a lista?'
+  //   );
+
+  //   if (!confirmacao) {
+  //     return;
+  //   }
+  //   this.listaService.clearLista(this.userId);
+  //   this.tarefas = [];
+  //   this.snackBar.open('Todas as tarefas foram removidas!', 'Fechar', {
+  //     duration: 3000,
+  //     verticalPosition: 'top',
+  //     horizontalPosition: 'right',
+  //   });
+  // }
 }

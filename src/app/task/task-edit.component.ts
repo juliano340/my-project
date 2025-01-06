@@ -4,6 +4,7 @@ import { ListaService } from './task.service';
 import { Item } from './task.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-task-edit',
@@ -21,7 +22,8 @@ export class TaskEditComponent implements OnInit {
     private listaService: ListaService,
     private router: Router,
     private fb: FormBuilder,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private location: Location
   ) {}
 
   ngOnInit() {
@@ -67,7 +69,12 @@ export class TaskEditComponent implements OnInit {
           this.task.userId
         )
         .subscribe(() => {});
-      this.router.navigate(['/exibir']);
+      this.snackBar.open('Tarefa atualizada com sucesso!', 'Fechar', {
+        duration: 2000,
+        verticalPosition: 'top',
+        horizontalPosition: 'right',
+      });
+      this.location.back();
     }
   }
   cancelar() {
@@ -76,7 +83,7 @@ export class TaskEditComponent implements OnInit {
     }
 
     if (this.task) {
-      this.router.navigate(['/exibir']);
+      this.location.back();
     }
   }
 }

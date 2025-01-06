@@ -10,7 +10,7 @@
       </div>
       <button
         mat-icon-button
-        color="primary"
+        color="secondary"
         [routerLink]="['/task/edit', item.id]"
         aria-label="Editar Tarefa"
         *ngIf="isAdmin"
@@ -37,5 +37,6 @@
     *ngIf="totalItens > 0 && isAdmin"
   >
     Limpar Lista
+    <mat-icon>delete_sweep</mat-icon>
   </button>
 </div>

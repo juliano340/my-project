@@ -35,18 +35,7 @@ export class ExibirListaComponent implements OnInit {
         this.isAdmin = loggedInUser.role === 'admin';
       });
     }
-
-    // const loggedInUser = JSON.parse(
-    //   localStorage.getItem('loggedInUser') || '{}'
-    // );
-
-    // if (loggedInUser?.id) {
-    //   this.itens = this.listaService.getItensPorUsuario(loggedInUser.id);
-    //   this.totalItens = this.itens.length;
-    //   this.isAdmin = loggedInUser.role === 'admin';
-    // }
   }
-
   openDialog() {
     const dialogRef = this.dialog.open(DialogComponent, {
       enterAnimationDuration: 0,
@@ -58,7 +47,6 @@ export class ExibirListaComponent implements OnInit {
   // observable: observa eventos e retorna
   // subscribe: capta esses eventos
   // promise: Promessa de retorno de algo no futuro
-
   openDialogPromise() {
     return new Promise((resolve) => {
       const dialogRef = this.dialog.open(DialogComponent);
@@ -68,7 +56,6 @@ export class ExibirListaComponent implements OnInit {
         .subscribe((result: boolean) => resolve(result));
     });
   }
-
   removerItem(index: number) {
     const loggedInUser = this.UserService.getLoggedInUser();
 
@@ -91,51 +78,7 @@ export class ExibirListaComponent implements OnInit {
         });
       }
     });
-
-    //MÉTODO ANTIGO DE REMOVER ITEM (LOCAL STORAGE):
-
-    // removerItem(index: number) {
-    //   const loggedInUser = this.UserService.getLoggedInUser();
-
-    //   this.openDialogPromise().then((result) => {
-    //     if (!result) {
-    //       return;
-    //     }
-
-    //     if (loggedInUser?.id) {
-    //       const itemId = this.itens[index]?.id;
-    //       this.listaService.deleteItem(itemId);
-    //       this.itens.splice(index, 1);
-    //       this.totalItens = this.itens.length;
-
-    //       this.snackBar.open('Item removido com sucesso!', 'Fechar', {
-    //         duration: 3000,
-    //         verticalPosition: 'top',
-    //         horizontalPosition: 'right',
-    //       });
-    //     }
-    //   });
-
-    // this.openDialog().subscribe((resposta: boolean) => {
-    //   if (!resposta) {
-    //     return;
-    //   }
-
-    //   if (loggedInUser?.id) {
-    //     const itemId = this.itens[index]?.id;
-    //     this.listaService.deleteItem(itemId);
-    //     this.itens.splice(index, 1);
-    //     this.totalItens = this.itens.length;
-
-    //     this.snackBar.open('Item removido com sucesso!', 'Fechar', {
-    //       duration: 3000,
-    //       verticalPosition: 'top',
-    //       horizontalPosition: 'right',
-    //     });
-    //   }
-    // });
   }
-
   limparLista() {
     this.openDialogPromise().then((result) => {
       if (!result) {
