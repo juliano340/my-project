@@ -70,6 +70,7 @@ export class ExibirListaComponent implements OnInit {
   }
 
   removerItem(index: number) {
+    //Pega o usuário logado
     const loggedInUser = this.UserService.getLoggedInUser();
 
     this.openDialogPromise().then((result) => {
@@ -79,7 +80,8 @@ export class ExibirListaComponent implements OnInit {
 
       if (loggedInUser?.id) {
         const itemId = this.itens[index]?.id;
-        this.listaService.deleteItem(itemId);
+
+        this.listaService.deleteItem(itemId).subscribe(() => {});
         this.itens.splice(index, 1);
         this.totalItens = this.itens.length;
 
@@ -90,6 +92,30 @@ export class ExibirListaComponent implements OnInit {
         });
       }
     });
+
+    //MÉTODO ANTIGO DE REMOVER ITEM (LOCAL STORAGE):
+
+    // removerItem(index: number) {
+    //   const loggedInUser = this.UserService.getLoggedInUser();
+
+    //   this.openDialogPromise().then((result) => {
+    //     if (!result) {
+    //       return;
+    //     }
+
+    //     if (loggedInUser?.id) {
+    //       const itemId = this.itens[index]?.id;
+    //       this.listaService.deleteItem(itemId);
+    //       this.itens.splice(index, 1);
+    //       this.totalItens = this.itens.length;
+
+    //       this.snackBar.open('Item removido com sucesso!', 'Fechar', {
+    //         duration: 3000,
+    //         verticalPosition: 'top',
+    //         horizontalPosition: 'right',
+    //       });
+    //     }
+    //   });
 
     // this.openDialog().subscribe((resposta: boolean) => {
     //   if (!resposta) {

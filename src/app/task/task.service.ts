@@ -71,11 +71,15 @@ export class ListaService {
   //   }
   // }
 
-  deleteItem(itemId: number) {
-    const itemIndex = this.itens.findIndex((item) => item.id === itemId);
-    this.itens.splice(itemIndex, 1);
-    this.saveInLocalStorage();
+  deleteItem(itemId: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${itemId}`);
   }
+
+  // deleteItem(itemId: number) {
+  //   const itemIndex = this.itens.findIndex((item) => item.id === itemId);
+  //   this.itens.splice(itemIndex, 1);
+  //   this.saveInLocalStorage();
+  // }
 
   clearLista(userId: number) {
     this.itens = this.itens.filter((item) => item.userId !== userId);
