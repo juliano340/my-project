@@ -39,8 +39,22 @@ export class AdminUserTasksComponent implements OnInit {
 
     if (user) {
       this.userName = user.name;
-      this.listaService.getAll().subscribe((data) => {
-        this.tarefas = data.filter((item) => item.userId === this.userId);
+      this.listaService.getAll().subscribe({
+        next: (data) => {
+          this.tarefas = data.filter((item) => item.userId === this.userId);
+        },
+        error: (err) => {
+          console.error('Erro ao carregar tarefas:', err);
+          this.snackBar.open(
+            'Não foi possível carregar as tarefas. Sem conexão com a API.',
+            'Fechar',
+            {
+              duration: 5000,
+              verticalPosition: 'top',
+              horizontalPosition: 'right',
+            }
+          );
+        },
       });
     }
   }

@@ -29,13 +29,28 @@ export class ExibirListaComponent implements OnInit {
     );
 
     if (loggedInUser?.id) {
-      this.listaService.getAll().subscribe((itens) => {
-        this.itens = itens.filter((item) => item.userId === loggedInUser.id);
-        this.totalItens = this.itens.length;
-        this.isAdmin = loggedInUser.role === 'admin';
+      this.listaService.getAll().subscribe({
+        next: (itens) => {
+          this.itens = itens.filter((item) => item.userId === loggedInUser.id);
+          this.totalItens = this.itens.length;
+          this.isAdmin = loggedInUser.role === 'admin';
+        },
+        error: (err) => {
+          console.error('Erro ao carregar itens:', err);
+          this.snackBar.open(
+            'Não foi possível carregar os itens. Sem conexão com a API!',
+            'Fechar',
+            {
+              duration: 3000,
+              verticalPosition: 'top',
+              horizontalPosition: 'right',
+            }
+          );
+        },
       });
     }
   }
+
   openDialog() {
     const dialogRef = this.dialog.open(DialogComponent, {
       enterAnimationDuration: 0,

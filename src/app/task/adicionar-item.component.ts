@@ -27,7 +27,7 @@ export class AdicionarItemComponent implements OnInit {
 
   initializeForm() {
     this.addForm = this.fb.group({
-      nome: ['', [Validators.required]],
+      nome: ['', [Validators.required, Validators.maxLength(30)]],
       categoria: ['', [Validators.required]],
     });
   }
@@ -47,13 +47,25 @@ export class AdicionarItemComponent implements OnInit {
 
     this.listaService
       .addItem(this.addForm.value.nome, this.addForm.value.categoria, userId)
-      .subscribe(() => {});
-
-    this.snackBar.open('Item adicionado com sucesso!', 'Fechar', {
-      duration: 3000,
-      verticalPosition: 'top',
-      horizontalPosition: 'right',
-    });
-    this.addForm.reset();
+      .subscribe({
+        next: () => {
+          this.snackBar.open('Item adicionado com sucesso!', 'Fechar', {
+            duration: 3000,
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
+          });
+          this.addForm.reset(); // Limpa o formulário após sucesso
+        },
+        error: (err) => {
+          console.error('Erro ao adicionar item:', err); // Log do erro no console
+          const errorMessage =
+            err?.error?.message || 'Erro ao adicionar item. Tente novamente.';
+          this.snackBar.open(errorMessage, 'Fechar', {
+            duration: 3000,
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
+          });
+        },
+      });
   }
 }

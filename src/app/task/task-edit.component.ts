@@ -41,7 +41,7 @@ export class TaskEditComponent implements OnInit {
 
   initializeForm() {
     this.editForm = this.fb.group({
-      nome: ['', [Validators.required]],
+      nome: ['', [Validators.required, Validators.maxLength(30)]],
       categoria: ['', [Validators.required]],
     });
   }

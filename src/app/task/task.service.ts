@@ -4,6 +4,8 @@ import { Item } from './task.model';
 import { User } from '../user/users.model';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +27,12 @@ export class ListaService {
       userId,
     };
 
-    return this.http.post(`${this.apiUrl}`, newItem);
+    return this.http.post(`${this.apiUrl}`, newItem).pipe(
+      catchError((error) => {
+        console.error('Erro ao adicionar item:', error);
+        return throwError(() => error);
+      })
+    );
   }
 
   getById(id: number): Observable<any> {
