@@ -35,7 +35,7 @@ export class ListaService {
     );
   }
 
-  getById(id: number): Observable<any> {
+  getById(id: number): Observable<Item> {
     return this.http.get<Item>(`${this.apiUrl}/${id}`);
   }
 
@@ -44,7 +44,7 @@ export class ListaService {
     nome: string,
     categoria: string,
     userId: number
-  ): Observable<any> {
+  ): Observable<Object> {
     return this.http.put(`${this.apiUrl}`, { id, nome, categoria, userId });
   }
 
@@ -52,11 +52,11 @@ export class ListaService {
     return this.users;
   }
 
-  deleteItem(itemId: number): Observable<any> {
+  deleteItem(itemId: number): Observable<Object> {
     return this.http.delete(`${this.apiUrl}/${itemId}`);
   }
 
-  clearLista(userId: number): Observable<any> {
+  clearLista(userId: number): Observable<Object> {
     return this.http.delete(`${this.apiUrl}/all/${userId}`);
   }
 

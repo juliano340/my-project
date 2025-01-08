@@ -54,10 +54,9 @@ export class AdicionarItemComponent implements OnInit {
             verticalPosition: 'top',
             horizontalPosition: 'right',
           });
-          this.addForm.reset(); // Limpa o formulário após sucesso
+          this.addForm.reset();
         },
         error: (err) => {
-          console.error('Erro ao adicionar item:', err); // Log do erro no console
           const errorMessage =
             err?.error?.message || 'Erro ao adicionar item. Tente novamente.';
           this.snackBar.open(errorMessage, 'Fechar', {

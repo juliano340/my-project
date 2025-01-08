@@ -99,11 +99,9 @@ export class ExibirListaComponent implements OnInit {
       if (!result) {
         return;
       }
-
       const loggedInUser = JSON.parse(
         localStorage.getItem('loggedInUser') || '{}'
       );
-
       if (loggedInUser?.id) {
         this.listaService.clearLista(loggedInUser.id).subscribe(() => {});
         this.itens = [];
@@ -115,12 +113,6 @@ export class ExibirListaComponent implements OnInit {
           horizontalPosition: 'right',
         });
       }
-
-      this.snackBar.open('Itens removidos com sucesso!', 'Fechar', {
-        duration: 3000,
-        verticalPosition: 'top',
-        horizontalPosition: 'right',
-      });
     });
   }
 }
